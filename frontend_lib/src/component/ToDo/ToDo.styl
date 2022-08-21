@@ -17,9 +17,11 @@
       margin-top standardSpacing
 
       & > textarea
-        border borderStyle
+        border none
         border-radius standardBorderRadius
         padding textSpacing
+        &:disabled
+          border borderStyle
 
     &Button
       align-self flex-end

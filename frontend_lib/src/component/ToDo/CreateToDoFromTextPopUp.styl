@@ -13,9 +13,11 @@
 
     & textarea
       width 100%
-      border borderStyle
+      border none
       border-radius standardBorderRadius
       padding textSpacing
+      &:disabled
+        border borderStyle
 
   &__main
     width 100%

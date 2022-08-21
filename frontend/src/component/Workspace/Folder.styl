@@ -1,17 +1,5 @@
 @import "~tracim_frontend_lib/src/css/Variable.styl"
 
-// -----------------------------------------------------
-// border management for Workspace container
-
-.folder__header
-  border borderStyle
-.folder + .content, .content + .content
-  border-bottom 0
-.folder__content > .content, .folder__content > .folder
-  border-bottom 0
-.folder:not(.active).item-last
-  border-bottom borderStyle
-
 folderclose()
   height 0
   visibility hidden
@@ -56,7 +44,6 @@ folderopen()
     cursor pointer
     &:hover
       .folder__header__triangleborder
-        border-top-color inherit
         &__triangle
           // INFO - CH - 2019-08-07 - In the HTML, the .folder__header__triangleborder__triangle class also has .primaryColorFontLighten
           // So it always has it's font in the primary color but only uses it as border color on mousehover through "currentColor"
@@ -68,7 +55,7 @@ folderopen()
       bottom -16px
       border-style solid
       border-width 16px 21px 0 21px
-      border-color grey transparent transparent transparent
+      border-color transparent transparent transparent transparent
       z-index 1
       &__triangle
         display none
