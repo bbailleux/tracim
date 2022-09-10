@@ -73,7 +73,7 @@ export class PersonalData extends React.Component {
           <label>
             {props.t('New full name:')}
             <input
-              className='personaldata__form__txtinput primaryColorBorderLighten form-control'
+              className='personaldata__form__txtinput form-control'
               type='text'
               data-cy='personaldata__form__txtinput__fullname'
               placeholder={props.userPublicName}
@@ -86,7 +86,7 @@ export class PersonalData extends React.Component {
             <label>
               {props.t('New username:')}
               <input
-                className='personaldata__form__txtinput primaryColorBorderLighten form-control'
+                className='personaldata__form__txtinput form-control'
                 type='text'
                 data-cy='personaldata__form__txtinput__username'
                 placeholder={props.userUsername}
@@ -112,7 +112,7 @@ export class PersonalData extends React.Component {
               <label>
                 {props.t('New email:')}
                 <input
-                  className='personaldata__form__txtinput withAdminMsg primaryColorBorderLighten form-control'
+                  className='personaldata__form__txtinput withAdminMsg form-control'
                   type='email'
                   data-cy='personaldata__form__txtinput__email'
                   placeholder={props.userEmail}
@@ -139,7 +139,7 @@ export class PersonalData extends React.Component {
               <label>
                 {props.displayAdminInfo ? props.t("Administrator's password:") : props.t('Type your password:')}
                 <input
-                  className='personaldata__form__txtinput checkPassword primaryColorBorderLighten form-control'
+                  className='personaldata__form__txtinput checkPassword form-control'
                   type='password'
                   value={state.checkPassword}
                   onChange={this.handleChangeCheckPassword}

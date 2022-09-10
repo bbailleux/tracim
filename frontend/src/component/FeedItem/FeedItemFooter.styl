@@ -2,6 +2,7 @@
 
 .feedItemFooter
   display flex
+  align-items center
   &__left
     display flex
     align-items center
@@ -15,19 +16,22 @@
     display flex
     align-items center
     & .buttonComments
-      margin-top 0px
+      padding standardSpacing
+      margin-top textSpacing
+      margin-bottom textSpacing
       margin-inline-end standardSpacing
-      margin-bottom standardSpacing
       margin-inline-start 0px
     & .EmojiReactionButton__buttonpicker
       padding-top standardSpacing
       padding-inline-end standardSpacing
       padding-bottom standardSpacing
-      padding-inline-start 0
+      padding-inline-start textSpacing
     &__participate
-      margin-inline-end standardSpacing
-      margin-bottom standardSpacing
       padding standardSpacing
+      margin-top textSpacing
+      margin-bottom textSpacing
+      margin-inline-end standardSpacing
+      margin-inline-start 0px
       color lightDarkGrey
       border-radius standardBorderRadius
       & > span

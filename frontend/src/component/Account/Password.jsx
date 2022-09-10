@@ -101,7 +101,7 @@ export class Password extends React.Component {
               <label>
                 {props.t('Current password:')}
                 <input
-                  className='personaldata__form__txtinput primaryColorBorderLighten form-control'
+                  className='personaldata__form__txtinput form-control'
                   type='password'
                   placeholder=''
                   value={state.oldPassword}
@@ -116,7 +116,7 @@ export class Password extends React.Component {
             <label>
               {props.t('New password:')}
               <input
-                className='personaldata__form__txtinput primaryColorBorderLighten form-control'
+                className='personaldata__form__txtinput form-control'
                 type='password'
                 value={state.newPassword}
                 onChange={this.handleChangeNewPassword}
@@ -129,7 +129,7 @@ export class Password extends React.Component {
             <label>
               {props.t('Repeat new password:')}
               <input
-                className='personaldata__form__txtinput withAdminMsg primaryColorBorderLighten form-control'
+                className='personaldata__form__txtinput withAdminMsg form-control'
                 type='password'
                 value={state.newPassword2}
                 onChange={this.handleChangeNewPassword2}
@@ -142,7 +142,7 @@ export class Password extends React.Component {
               <label>
                 {props.t("Administrator's password:")}
                 <input
-                  className='personaldata__form__txtinput checkPassword primaryColorBorderLighten form-control'
+                  className='personaldata__form__txtinput checkPassword form-control'
                   type='password'
                   value={state.checkAdminPassword}
                   onChange={this.handleChangeCheckAdminPassword}

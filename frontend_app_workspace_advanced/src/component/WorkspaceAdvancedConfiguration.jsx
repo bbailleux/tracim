@@ -3,13 +3,14 @@ import Radium from 'radium'
 import PropTypes from 'prop-types'
 import {
   AgendaInfo,
-  tinymceRemove,
   AutoComplete,
   BtnSwitch,
   ConfirmPopup,
+  IconButton,
   Popover,
   ROLE_LIST,
-  SingleChoiceList
+  SingleChoiceList,
+  tinymceRemove
 } from 'tracim_frontend_lib'
 import { translate } from 'react-i18next'
 
@@ -147,13 +148,11 @@ export class WorkspaceAdvancedConfiguration extends React.Component {
               </div>
 
               <div className='formBlock__field workspace_advanced__delete__content'>
-                <button
-                  className='btn outlineTextBtn primaryColorBorder primaryColorFontDarkenHover primaryColorFont nohover'
-                  onClick={props.onClickDeleteWorkspaceBtn}
-                >
-                  {props.t('Delete')}
-                </button>
-
+                <IconButton
+                  text={props.t('Delete')}
+                  textMobile={props.t('Delete')}
+                  icon='far fa-trash-alt'
+                />
                 <div className='workspace_advanced__delete__content__warning' />
               </div>
 
