@@ -4,6 +4,7 @@ import {
   addRevisionFromTLM,
   buildContentPathBreadcrumbs,
   createSpaceTree,
+  handleClickCopyLink,
   handleFetchResult,
   displayDistanceDate,
   convertBackslashNToBr,
@@ -68,7 +69,8 @@ import {
   sortContentByCreatedDateAndID,
   sortContentByStatus,
   USER_CALL_STATE,
-  STATUSES
+  STATUSES,
+  TIMELINE_TYPE
 } from './helper.js'
 
 import {
@@ -302,6 +304,7 @@ export {
   EmptyListMessage,
   getToDo,
   getToDoListForUser,
+  handleClickCopyLink,
   TIMELINE_ITEM_COUNT_PER_PAGE,
   addRevisionFromTLM,
   AVATAR_SIZE,
@@ -494,5 +497,6 @@ export {
   TimedEvent,
   ToDoItem,
   ToDoManagement,
-  STATUSES
+  STATUSES,
+  TIMELINE_TYPE
 }

@@ -15,6 +15,7 @@ import {
   getContentComment,
   getFileChildContent,
   getOrCreateSessionClientToken,
+  handleClickCopyLink,
   handleFetchResult,
   handleInvalidMentionInComment,
   tinymceRemove,
@@ -39,8 +40,7 @@ import {
 import {
   CONTENT_NAMESPACE,
   FETCH_CONFIG,
-  findUserRoleIdInWorkspace,
-  handleClickCopyLink
+  findUserRoleIdInWorkspace
 } from '../util/helper.js'
 import {
   getPublicationPage,
@@ -371,10 +371,7 @@ export class Publications extends React.Component {
       TRANSLATION_STATE.DISABLED
     )
 
-    // INFO - G.B. - 2021-03-19 - For threads, we remove the first element because it's already shown in the preview
-    const finalCommentList = publicationContentType === CONTENT_TYPE.FILE ? commentList : commentList.slice(1)
-
-    props.dispatch(setCommentListToPublication(publicationId, finalCommentList))
+    props.dispatch(setCommentListToPublication(publicationId, commentList))
     if (publicationContentType === CONTENT_TYPE.THREAD) {
       props.dispatch(setFirstComment(publicationId, commentList[0]))
     }
@@ -479,7 +476,7 @@ export class Publications extends React.Component {
 
   handleClickCopyLink = content => {
     const { props } = this
-    handleClickCopyLink(content)
+    handleClickCopyLink(content.id)
     props.dispatch(newFlashMessage(props.t('The link has been copied to clipboard'), 'info'))
   }
 
@@ -581,7 +578,6 @@ export class Publications extends React.Component {
             allowEdition={this.isEditionAllowed(publication, userRoleIdInWorkspace)}
             commentList={publication.commentList}
             content={publication}
-            customColor={COLORS.PUBLICATION}
             key={`publication_${publication.id}`}
             ref={publication.id === currentPublicationId ? this.currentPublicationRef : undefined}
             memberList={props.currentWorkspace.memberList}
@@ -589,7 +585,7 @@ export class Publications extends React.Component {
             isPublication
             inRecentActivities={false}
             onClickEdit={() => this.handleClickEdit(publication)}
-            showTimeline
+            showCommentList
             workspaceId={Number(publication.workspaceId)}
             user={props.user}
             {...this.getPreviewLinkParameters(publication)}

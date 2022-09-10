@@ -10,7 +10,7 @@
   background-color lightGrey
   height 100%
   position fixed
-  width calc(100% - 60px)
+  width "calc(100% - %s)" % closedSidebarWidth
   z-index 9
   &.sidebarVisible
     max-width "calc(100% - %s)" % sidebarWidth
@@ -262,8 +262,6 @@ responsiveColumnStyle()
     & span
       display none
   .wsContentGeneric
-    width 100%
-    max-width 100%
     &__content
       overflow-Y auto
       width 100%
@@ -283,8 +281,6 @@ responsiveColumnStyle()
     & span
       display none
   .wsContentGeneric
-    width 100%
-    max-width 100%
     &.sidebarVisible
       max-width 100%
     &__option
