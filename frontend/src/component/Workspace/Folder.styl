@@ -12,12 +12,6 @@ folderopen()
   visibility visible
   transition opacity 0.3s
 
-[dir=ltr] .folder__header__triangleborder
-  left -1px
-
-[dir=rtl] .folder__header__triangleborder
-  right -1px
-
 .folder
   padding-inline-start 20px
   .folder__header
@@ -40,35 +34,10 @@ folderopen()
     margin-inline-start -20px
     border-bottom 0
     padding standardSpacing 0
-    background-color lightGrey
+    background-color offWhite
+    border-radius standardBorderRadius
+    margin-top textSpacing
     cursor pointer
-    &:hover
-      .folder__header__triangleborder
-        &__triangle
-          // INFO - CH - 2019-08-07 - In the HTML, the .folder__header__triangleborder__triangle class also has .primaryColorFontLighten
-          // So it always has it's font in the primary color but only uses it as border color on mousehover through "currentColor"
-          border-top-color currentColor
-          color grey-hover
-    &__triangleborder
-      display none
-      position absolute
-      bottom -16px
-      border-style solid
-      border-width 16px 21px 0 21px
-      border-color transparent transparent transparent transparent
-      z-index 1
-      &__triangle
-        display none
-        position absolute
-        top -16px
-        left -20px
-        border-style solid
-        border-width 15px 20px 0 20px
-        border-color lightGrey transparent transparent transparent
-      &.open
-        display block
-        .folder__header__triangleborder__triangle
-          display block
     &__dragHandle
       position absolute
       padding 0 standardSpacing

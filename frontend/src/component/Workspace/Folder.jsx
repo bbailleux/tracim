@@ -74,13 +74,9 @@ class Folder extends React.Component {
           ref={props.userRoleIdInWorkspace >= ROLE.contentManager.id ? props.connectDropTarget : undefined}
         >
           <div
-            className='folder__header align-items-center'
+            className='folder__header'
             ref={props.userRoleIdInWorkspace >= ROLE.contentManager.id ? props.connectDragPreview : undefined}
           >
-
-            <div className={classnames('folder__header__triangleborder', { open: isActive })}>
-              <div className='folder__header__triangleborder__triangle primaryColorFontLighten' />
-            </div>
             <div
               className='folder__header__dragPreview'
               ref={props.userRoleIdInWorkspace >= ROLE.contentManager.id ? props.connectDragSource : undefined}
@@ -103,18 +99,9 @@ class Folder extends React.Component {
               <div className='folder__header__button__addbtn'>
                 {props.userRoleIdInWorkspace >= ROLE.contributor.id && props.showCreateContentButton && folderAvailableApp.length > 0 && (
                   <DropdownMenu
-                    buttonOpts={
-                      <span>
-                        <span className='folder__header__button__addbtn__text-desktop'>
-                          {`${props.t('Create in folder')}...`}
-                        </span>
-                        <span className='folder__header__button__addbtn__text-responsive'>
-                          <i className='folder__header__button__addbtn__text-responsive__iconplus fas fa-plus' />
-                        </span>
-                      </span>
-                    }
+                    buttonIcon='fas fa-plus'
                     buttonTooltip={props.t('Create in folder')}
-                    buttonCustomClass='folder__header__button__addbtn__text outlineTextBtn primaryColorBgHover primaryColorBorderDarkenHover'
+                    buttonCustomClass='folder__header__button__addbtn__text primaryColorBgHover'
                     isButton
                   >
                     {folderAvailableApp.map(app =>
