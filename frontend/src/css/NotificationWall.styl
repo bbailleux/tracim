@@ -3,14 +3,12 @@
   width 40%
   height 100%
   background-color offWhite
-  z-index 26
+  z-index 10
   display flex
   flex-direction column
   max-width 600px
   overflow hidden
-  transition 0.5s
-  & .iconbutton
-    font-size metadataFontSize
+  // transition 0.5s
   &__list
     flex-grow 2
     overflow auto
@@ -107,16 +105,15 @@
 // INFO - MB - 20210204 - overrides ListItemWrapper styles because .content is used in many places
 .notification > .notification__list > .content
   border none
+  margin 0
 
 [dir=ltr] .notification
-  right 0
-  box-shadow shadow-right
+  box-shadow shadow-left
   &__list__item__text__avatars__second
     left twoAuthorsAvatarSize
 
 [dir=rtl] .notification
-  left 0
-  box-shadow shadow-left
+  box-shadow shadow-right
   &__list__item__text__avatars__second
     right twoAuthorsAvatarSize
 

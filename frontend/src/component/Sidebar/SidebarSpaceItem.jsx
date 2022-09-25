@@ -125,13 +125,13 @@ class SidebarSpaceItem extends React.Component {
   render () {
     const { props, state } = this
     const INDENT_WIDTH = 20
-    const BASE_MARGIN = 20
+    const BASE_MARGIN = 25
 
     return (
       <div
         id={props.id}
         className={classnames(
-          'sidebar__item__space',
+          'sidebar__item__inside_menu sidebar__item__space',
           {
             'primaryColorBorder primaryColorBgOpacity sidebar__item__current':
               props.location.pathname.includes(`${PAGE.WORKSPACE.ROOT}/${props.spaceId}/`) && !props.isNotificationWallOpen
