@@ -19,6 +19,7 @@
     cursor pointer
 
 .EmojiReactionButton__button
+  background-color lightGrey
   border none
   font-size metadataFontSize
   margin-inline-end textSpacing
@@ -29,7 +30,7 @@
 
   &:hover:not(:disabled)
     color fontColor
-    background-color rgba(0, 0, 0, 0.5)
+    filter brightness(0.95)
 
   &__value
     font-family 'Segoe UI Emoji', 'Segoe UI Symbol', 'Segoe UI', 'Apple Color Emoji', 'Twemoji Mozilla', 'Noto Color Emoji', 'Android Emoji', sans-serif

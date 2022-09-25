@@ -8,7 +8,7 @@ export const DropdownCreateButton = props => {
     <DropdownMenu
       buttonCustomClass='dropdownCreateBtn__label highlightBtn primaryColorBg primaryColorBgDarkenHover'
       buttonDataCy='dropdownCreateBtn'
-      buttonLabel={`${props.t('Create')}...`}
+      buttonIcon='fas fa-plus'
       buttonTooltip={props.t('Create')}
       isButton
     >
