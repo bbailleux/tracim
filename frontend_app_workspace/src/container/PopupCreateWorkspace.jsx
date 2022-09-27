@@ -267,7 +267,7 @@ export class PopupCreateWorkspace extends React.Component {
 
                 <div className='newSpace__button'>
                   <button
-                    className='btn outlineTextBtn primaryColorBgHover newSpace__button__back'
+                    className='btn primaryColorBgHover newSpace__button__back'
                     disabled={!state.newName || state.newName.length === 0 || !state.newType || state.newType.length === 0}
                     onClick={this.handleClickNextOrBack}
                     title={props.t('Back')}
