@@ -150,7 +150,6 @@ import CardPopupCreateContent from './component/CardPopup/CardPopupCreateContent
 
 import DropdownMenu from './component/DropdownMenu/DropdownMenu.jsx'
 
-import NewVersionBtn from './component/OptionComponent/NewVersionBtn.jsx'
 import ArchiveDeleteContent from './component/OptionComponent/ArchiveDeleteContent.jsx'
 import SelectStatus from './component/Input/SelectStatus/SelectStatus.jsx'
 import ErrorFlashMessageTemplateHtml from './component/ErrorFlashMessageTemplateHtml/ErrorFlashMessageTemplateHtml.jsx'
@@ -164,7 +163,6 @@ import NoHoverListItem from './component/Lists/NoHoverListItem/NoHoverListItem.j
 import ComposedIcon from './component/Icon/ComposedIcon.jsx'
 
 import IconButton from './component/Button/IconButton.jsx'
-import GenericButton from './component/Button/GenericButton.jsx'
 import TranslateButton from './component/Button/TranslateButton.jsx'
 
 import PromptMessage from './component/PromptMessage/PromptMessage.jsx'
@@ -356,8 +354,6 @@ export {
   Delimiter,
   CardPopup,
   CardPopupCreateContent,
-  NewVersionBtn,
-  GenericButton,
   ArchiveDeleteContent,
   SelectStatus,
   ErrorFlashMessageTemplateHtml,

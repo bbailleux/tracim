@@ -8,18 +8,6 @@ a
 .table td
   vertical-align middle
 
-.outlineTextBtn
-  padding standardSpacing
-  background-color transparent
-  cursor pointer
-  &:disabled
-    cursor not-allowed
-  &:hover
-    color offWhite
-  &.nohover
-    &:hover
-      color inherit
-
 .highlightBtn
   padding standardSpacing
   color offWhite
@@ -74,6 +62,7 @@ div.tox .tox-toolbar
   & > div:last-child
     flex 1
     position relative
+    overflow auto
 
 .nopadding
   padding 0

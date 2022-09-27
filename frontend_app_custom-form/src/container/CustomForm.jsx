@@ -10,7 +10,7 @@ import {
   PopinFixedOption,
   PopinFixedContent,
   Timeline,
-  NewVersionBtn,
+  IconButton,
   ArchiveDeleteContent,
   SelectStatus,
   displayDistanceDate,
@@ -537,11 +537,13 @@ class CustomForm extends React.Component {
           <div/* this div in display flex, justify-content space-between */>
             <div className='d-flex'>
               {loggedUser.userRoleIdInWorkspace >= 2 && (
-                <NewVersionBtn
-                  customColor={this.state.hexcolor}
-                  onClickNewVersionBtn={this.handleClickNewVersion}
+                <IconButton
+                  color={this.state.hexcolor}
+                  onClick={this.handleClickNewVersion}
                   disabled={mode !== MODE.VIEW || !content.is_editable}
-                  label={t('Edit')}
+                  text={t('Edit')}
+                  customClass='wsContentGeneric__option__menu__addversion newVersionBtn'
+                  dataCy='wsContentGeneric__option__menu__addversion'
                 />
               )}
 
