@@ -5,7 +5,6 @@
     margin-top standardSpacing
 
     & > *:first-child
-      border none
       background-color transparent
       padding 0
       height auto
@@ -22,12 +21,11 @@
       padding-bottom standardSpacing
       align-items center
       line-height 1.5
-      height 60px
+      height listItemHeight
+      margin-top spacingBetweenListItem
+      border-radius standardBorderRadius
       width 100%
       background-color offWhite
-
-      &:nth-child(2n):not(:hover)
-        background-color lightGrey2
 
       &:hover
         background-color lightGrey1

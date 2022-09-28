@@ -26,6 +26,7 @@
     &Button
       align-self flex-end
       margin-bottom standardSpacing
+
   &__progressBar
     height textSpacing
     background-color fontColor
@@ -34,10 +35,12 @@
       background-color lightGrey1
       flex 1
       margin 0px pageSpacing
+
   &__title
     &_container
       display flex
       align-items center
+
   &Item
     display flex
     background-color offWhite
@@ -46,15 +49,21 @@
     align-content center
     align-items center
     padding standardSpacing
+    margin-top spacingBetweenListItem
+    border-radius standardBorderRadius
+
     &__checkbox
       font-size titleFontSize
       margin-inline-end textSpacing
       &:focus
         outline none
+
     &__delete:focus
       outline none
+
     &__timedEvent
       flex 1
+
     &__content
       flex 6
       align-items baseline
@@ -71,12 +80,12 @@
           &:hover
             color fontColor
             text-decoration underline
+
       &__task
         unicode-bidi plaintext
       & strong
         unicode-bidi plaintext
+
     &Checked
-      color darkGrey2
+      opacity 0.6
       background repeating-linear-gradient(10deg, lightGrey2, lightGrey2 5px, white 5px, white 15px)
-      & *
-        color darkGrey2
