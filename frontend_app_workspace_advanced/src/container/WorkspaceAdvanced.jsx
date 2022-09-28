@@ -822,10 +822,11 @@ export class WorkspaceAdvanced extends React.Component {
         >
           <TagList
             apiUrl={state.config.apiUrl}
-            workspaceId={state.content.workspace_id}
             contentId={state.content.content_id}
-            userRoleIdInWorkspace={state.loggedUser.userRoleIdInWorkspace}
+            customColor={state.config.hexcolor}
             userProfile={state.loggedUser.profile}
+            userRoleIdInWorkspace={state.loggedUser.userRoleIdInWorkspace}
+            workspaceId={state.content.workspace_id}
           />
         </PopinFixedRightPartContent>
       )

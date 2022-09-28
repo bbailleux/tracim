@@ -195,16 +195,17 @@ export class NewTagForm extends React.Component {
 
         <div className='tagList__form__submitBtn'>
           <IconButton
-            intent='primary'
-            mode='light'
+            color={props.customColor}
+            dataCy='validate_tag'
             disabled={
               !state.tagName ||
               (!props.contentId && tagExitsInSpace) ||
               (props.contentId && !tagExitsInSpace && (props.userRoleIdInWorkspace < ROLE.contentManager.id && props.userProfile !== PROFILE.administrator.slug))
             }
             icon='fas fa-check'
+            intent='primary'
+            mode='light'
             onClick={this.handleClickBtnValidate}
-            dataCy='validate_tag'
             text={this.getSubmitButtonLabel(tagExitsInSpace)}
           />
         </div>
@@ -220,6 +221,7 @@ NewTagForm.propTypes = {
   contentId: PropTypes.number.isRequired,
   workspaceId: PropTypes.number.isRequired,
   contentTagList: PropTypes.array,
+  customColor: PropTypes.string,
   spaceTaglist: PropTypes.array,
   userRoleIdInWorkspace: PropTypes.number,
   userProfile: PropTypes.string
@@ -227,6 +229,7 @@ NewTagForm.propTypes = {
 
 NewTagForm.defaultProps = {
   contentTagList: [],
+  customColor: '',
   spaceTaglist: [],
   userRoleIdInWorkspace: ROLE.reader.id,
   userProfile: PROFILE.user.slug
