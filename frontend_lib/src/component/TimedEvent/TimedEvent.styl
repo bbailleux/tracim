@@ -9,10 +9,12 @@
     padding 0
     margin 0
     font-size metadataFontSize
+    color darkGrey2
     &::after
       display none
     &:hover
       text-decoration underline
+      color fontColor
     &Contents
       text-overflow ellipsis
       overflow hidden
@@ -25,6 +27,9 @@
     overflow hidden
     font-weight bold
     text-overflow ellipsis
+    color darkGrey2
+    &:hover
+      color fontColor
   & .dropdownMenuItem
     cursor auto
     border-bottom 1px solid lightGrey1
