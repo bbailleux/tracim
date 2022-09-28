@@ -17,7 +17,7 @@ folderopen()
   .folder__header
     folderopen()
     &:hover
-      background-color grey-hover
+      background-color lightGrey1
   > .folder__content
     folderclose()
     & > .file, > .folder
@@ -55,7 +55,7 @@ folderopen()
       flex-grow 0
       padding 0 standardSpacing
       font-size bigIconSize
-      color darkGrey
+      color offBlack
       text-align center
     &__name
       display flex
@@ -69,7 +69,7 @@ folderopen()
         overflow hidden
       i
         margin-inline-end 1ex
-      color darkGrey
+      color offBlack
       font-weight bold
       ^[0].read > div > ^[1] &, ^[0].read > ^[1] & // renders .folder.read > .folder__header .folder__header__name
         font-weight normal
