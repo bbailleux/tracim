@@ -41,7 +41,7 @@ export const Breadcrumbs = props => {
             <li className='breadcrumbs__item' key='root'>
               <Link
                 to={props.root.link}
-                className='root primaryColorFont primaryColorFontDarkenHover'
+                className='root'
               >
                 {props.root.icon && <i className={`${props.root.icon}`} />}
                 <span className='breadcrumbs__item__text'>{props.root.label}&nbsp;</span>
@@ -66,7 +66,7 @@ export const Breadcrumbs = props => {
           >
             {(crumb.isALink
               ? (
-                <Link to={crumb.link} className='primaryColorFont primaryColorFontDarkenHover'>
+                <Link to={crumb.link}>
                   <div className='breadcrumbs__item__label'>{crumb.label}</div>
                 </Link>
               ) : <div className='breadcrumbs__item__label'>{crumb.label}</div>

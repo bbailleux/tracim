@@ -1,3 +1,5 @@
+@import "~tracim_frontend_lib/src/css/Variable.styl"
+
 a
   &:hover, &:link, &:visited
     text-decoration none
@@ -28,40 +30,39 @@ div.tox-tinymce
   border none
   border-radius standardBorderRadius
 
-div.tox .tox-statusbar
-  border none
-  background-color lightGrey2
-
 div.tox-shadowhost.tox-fullscreen, div.tox.tox-tinymce.tox-fullscreen
   z-index 1050
   margin-inline-start closedSidebarWidth
   width "calc(100% - %s)" % closedSidebarWidth !important // INFO - GB - 2022-08-23 - override TinyMCE calculated width
 
-div.tox .tox-toolbar
-  background-image none // native TinyMCE borders are drawn using a background image
-  background-color lightGrey2
-  &__group
-    border 0
-    padding 0
-    &:not(:last-child)
-      > :last-child
-        padding-right 3px
-        &:not(:hover)
+div.tox
+  .tox-statusbar
+    border none
+    background-color lightGrey2
+  .tox-toolbar
+    background-image none // native TinyMCE borders are drawn using a background image
+    background-color lightGrey2
+    &__group
+      border 0
+      padding 0
+      &:not(:last-child)
+        > :last-child
+          padding-right 3px
           border-right 1px solid #ccc
-          border-top-right-radius 0
-          border-bottom-right-radius 0
-        &:hover
-          border-right 1px solid transparent
+          border-radius 0
 
 .tox-toolbar-overlord
   margin-bottom -1px
 
+div.tox:not([dir=rtl]) .tox-toolbar__group:not(:last-of-type)
+  border none
+
 
 .sidebarpagecontainer
   display flex
-  overflow auto
   & > div:last-child
     flex 1
+    min-width "calc(100% - %s)" % sidebarWidth
 
 .nopadding
   padding 0
@@ -103,6 +104,11 @@ div.tox .tox-toolbar
       width auto
       height auto
       overflow-y auto
+  &:empty
+    display none
+
+#appFeatureContainer:empty
+  display none
 
 .popover-body
   font-family Quicksand
