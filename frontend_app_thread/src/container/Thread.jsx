@@ -377,6 +377,8 @@ export class Thread extends React.Component {
     const { props, state } = this
     const isPublication = state.content.content_namespace === CONTENT_NAMESPACE.PUBLICATION
     const color = isPublication ? COLORS.PUBLICATION : state.config.hexcolor
+    const revisionList = props.timeline.filter(t => t.timelineType === 'revision')
+    const contentVersionNumber = (revisionList.find(t => t.revision_id === state.content.current_revision_id) || { version_number: 1 }).version_number
 
     if (!state.isVisible) return null
 
@@ -452,6 +454,7 @@ export class Thread extends React.Component {
                 contentId={state.content.content_id}
                 contentType={state.content.content_type}
                 loading={props.loadingTimeline}
+                currentVersionId={contentVersionNumber}
                 customClass={`${state.config.slug}__contentpage`}
                 customColor={color}
                 loggedUser={state.loggedUser}

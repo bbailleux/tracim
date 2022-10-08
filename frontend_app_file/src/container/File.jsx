@@ -921,6 +921,8 @@ export class File extends React.Component {
 
   getMenuItemList = () => {
     const { props, state } = this
+    const revisionList = props.timeline.filter(t => t.timelineType === 'revision')
+    const contentVersionNumber = (revisionList.find(t => t.revision_id === state.content.current_revision_id) || { version_number: 1 }).version_number
 
     const timelineObject = {
       id: 'timeline',
@@ -933,6 +935,7 @@ export class File extends React.Component {
           <Timeline
             contentId={state.content.content_id}
             contentType={state.content.content_type}
+            currentVersionId={contentVersionNumber}
             loading={props.loadingTimeline}
             customClass={`${state.config.slug}__contentpage`}
             customColor={state.config.hexcolor}

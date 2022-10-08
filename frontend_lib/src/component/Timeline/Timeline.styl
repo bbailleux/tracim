@@ -23,14 +23,6 @@
       margin-inline-start auto
       margin-inline-end auto
       margin-block-end standardSpacing
-    &__item
-      position relative
-      margin textSpacing 0
-      width 100%
-      & + .revision
-        border none
-      &:last-child
-        margin-bottom 0
   &__warning
       position absolute
       width calc(100% - 20px)
@@ -100,7 +92,6 @@ columnTimeline()
     height 100%
     &__messagelist
       overflow visible
-      &__version__date
-        font-size metadataFontSize
     & .commentArea__advancedtext__btn
       display none
+      font-size metadataFontSize

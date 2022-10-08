@@ -161,10 +161,19 @@ export class Timeline extends React.Component {
               customClass='timeline__messagelist__showMoreButton'
             />
           )}
-          {props.loading ? <Loading /> : props.timelineData.map(content => {
+          {props.loading ? <Loading /> : props.timelineData.map((content, index) => {
             switch (content.timelineType) {
               case TIMELINE_TYPE.COMMENT:
-              case TIMELINE_TYPE.COMMENT_AS_FILE:
+              case TIMELINE_TYPE.COMMENT_AS_FILE: {
+                let isTheSameDateThatLastComment = false
+                if (index !== 0) {
+                  const lastContent = props.timelineData[index - 1]
+                  const currentContentDate = formatAbsoluteDate(content.created_raw, props.loggedUser.lang)
+                  const lastContentDate = formatAbsoluteDate(lastContent.created_raw, props.loggedUser.lang)
+                  isTheSameDateThatLastComment = (currentContentDate === lastContentDate) &&
+                    (lastContent.timelineType === TIMELINE_TYPE.COMMENT || lastContent.timelineType === TIMELINE_TYPE.COMMENT_AS_FILE)
+                }
+
                 return (
                   <Comment
                     isPublication={false}
@@ -173,6 +182,7 @@ export class Timeline extends React.Component {
                     apiUrl={props.apiUrl}
                     contentId={Number(content.content_id)}
                     apiContent={content}
+                    isTheSameDateThatLastComment={isTheSameDateThatLastComment}
                     workspaceId={Number(props.workspaceId)}
                     author={content.author}
                     loggedUser={props.loggedUser}
@@ -194,19 +204,20 @@ export class Timeline extends React.Component {
                     onClickOpenFileComment={() => props.onClickOpenFileComment(content)}
                   />
                 )
+              }
               case TIMELINE_TYPE.REVISION:
                 return (
                   <Revision
-                    customClass={props.customClass}
-                    customColor={props.customColor}
-                    revisionType={content.revision_type}
-                    createdFormated={formatAbsoluteDate(content.created_raw, props.loggedUser.lang)}
-                    createdDistance={displayDistanceDate(content.created_raw, props.loggedUser.lang)}
-                    versionNumber={content.version_number}
-                    status={props.availableStatusList.find(status => status.slug === content.status)}
-                    authorPublicName={content.author.public_name}
                     allowClickOnRevision={props.allowClickOnRevision}
+                    authorPublicName={content.author.public_name}
+                    createdDistance={displayDistanceDate(content.created_raw, props.loggedUser.lang)}
+                    createdFormated={formatAbsoluteDate(content.created_raw, props.loggedUser.lang)}
+                    customClass={props.customClass}
+                    isCurrentVersion={content.version_number === props.currentVersionId}
                     onClickRevision={() => props.onClickRevisionBtn(content)}
+                    revisionType={content.revision_type}
+                    status={props.availableStatusList.find(status => status.slug === content.status)}
+                    versionNumber={content.version_number}
                     key={`revision_${content.revision_id}`}
                   />
                 )
@@ -291,6 +302,7 @@ Timeline.propTypes = {
   workspaceId: PropTypes.number.isRequired,
   onClickValidateNewCommentBtn: PropTypes.func.isRequired,
   availableStatusList: PropTypes.array,
+  currentVersionId: PropTypes.number,
   deprecatedStatus: PropTypes.object,
   disableComment: PropTypes.bool,
   customClass: PropTypes.string,
@@ -336,6 +348,7 @@ Timeline.defaultProps = {
     faIcon: ''
   },
   disableComment: false,
+  currentVersionId: 0,
   customClass: '',
   customColor: '',
   id: '',

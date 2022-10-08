@@ -29,10 +29,6 @@ function areCommentActionsAllowed (loggedUser, commentAuthorId) {
 }
 
 const Comment = props => {
-  const styleSent = {
-    borderColor: props.customColor
-  }
-
   const createdFormated = formatAbsoluteDate(props.created, props.loggedUser.lang)
   const createdDistance = displayDistanceDate(props.created, props.loggedUser.lang)
   const isFile = (props.apiContent.content_type || props.apiContent.type) === CONTENT_TYPE.FILE
@@ -41,120 +37,119 @@ const Comment = props => {
   const actionsAllowed = areCommentActionsAllowed(props.loggedUser, props.author.user_id)
 
   return (
-    <div className={classnames(`${props.customClass}__messagelist__item`, 'timeline__messagelist__item')}>
+    <div
+      className={classnames(
+        `${props.customClass}__messagelist__item`,
+        'comment',
+        { isTheSameDateThatLastComment: props.isTheSameDateThatLastComment }
+      )}
+    >
+      {!props.isPublication && (
+        <div
+          className={classnames('comment__header', {
+            sent: props.fromMe,
+            received: !props.fromMe
+          })}
+        >
+          <Avatar
+            size={AVATAR_SIZE.MINI}
+            user={props.author}
+            apiUrl={props.apiUrl}
+          />
+
+          <ProfileNavigation
+            user={{
+              userId: props.author.user_id,
+              publicName: props.author.public_name
+            }}
+          >
+            <span>{props.author.public_name}</span>
+          </ProfileNavigation>
+
+          <div
+            className='comment__header__createdDate'
+            title={createdFormated}
+          >
+            {createdDistance}
+          </div>
+        </div>
+      )}
+
       <div
-        className={classnames(`${props.customClass}`, 'comment', {
-          sent: props.fromMe,
-          received: !props.fromMe
-        })}
-        style={props.fromMe ? styleSent : {}}
+        className={classnames(`${props.customClass}`, 'comment__body')}
       >
-        <div className={classnames(`${props.customClass}__body`, 'comment__body')}>
-          {!props.isPublication && (
-            <Avatar
-              size={AVATAR_SIZE.MEDIUM}
-              user={props.author}
-              apiUrl={props.apiUrl}
-            />
-          )}
-          <div className={classnames(`${props.customClass}__body__content`, 'comment__body__content')}>
-            {!props.isPublication && (
-              <div className={classnames(`${props.customClass}__body__content__header`, 'comment__body__content__header')}>
-                <div className={classnames(`${props.customClass}__body__content__header__meta`, 'comment__body__content__header__meta')}>
-                  <ProfileNavigation
-                    user={{
-                      userId: props.author.user_id,
-                      publicName: props.author.public_name
-                    }}
-                  >
-                    <span className={classnames(`${props.customClass}__body__content__header__meta__author`, 'comment__body__content__header__meta__author')}>
-                      {props.author.public_name}
-                    </span>
-                  </ProfileNavigation>
-
-                  <div
-                    className={classnames(`${props.customClass}__body__content__header__meta__date`, 'comment__body__content__header__meta__date')}
-                    title={createdFormated}
-                  >
-                    {createdDistance}
-                  </div>
-                </div>
-
-                {(isFile || actionsAllowed) && (
-                  <DropdownMenu
-                    buttonCustomClass='comment__body__content__header__actions'
-                    buttonIcon='fas fa-ellipsis-v'
-                    buttonTooltip={props.t('Actions')}
-                  >
-                    {(isFile
-                      ? (
-                        <IconButton
-                          icon='fas fa-paperclip'
-                          intent='link'
-                          key='openFileComment'
-                          mode='dark'
-                          onClick={props.onClickOpenFileComment}
-                          text={props.t('Open as content')}
-                          textMobile={props.t('Open as content')}
-                        />
-                      )
-                      : (
-                        <IconButton
-                          icon='fas fa-fw fa-pencil-alt'
-                          intent='link'
-                          key='editComment'
-                          mode='dark'
-                          onClick={props.onClickEditComment}
-                          text={props.t('Edit')}
-                          title={props.t('Edit comment')}
-                          textMobile={props.t('Edit comment')}
-                        />
-                      )
-                    )}
-
-                    {(actionsAllowed &&
-                      <IconButton
-                        icon='far fa-fw fa-trash-alt'
-                        intent='link'
-                        key='deleteComment'
-                        mode='dark'
-                        onClick={props.onClickDeleteComment}
-                        text={props.t('Delete')}
-                        title={props.t('Delete comment')}
-                        textMobile={props.t('Delete comment')}
-                      />
-                    )}
-                  </DropdownMenu>
+        <div className={classnames(`${props.customClass}__body__content`, 'comment__body__content')}>
+          <div className='comment__body__content__textAndPreview'>
+            <div
+              className='comment__body__content__text'
+            >
+              <div
+                className={classnames(`${props.customClass}__body__content__text`, 'comment__body__content__text')}
+                data-cy='comment__body__content__text'
+              >
+                {(isFile || (isThread && isFirstCommentFile)
+                  ? (
+                    <CommentFilePreview
+                      apiUrl={props.apiUrl}
+                      apiContent={isFile ? props.apiContent : props.apiContent.firstComment}
+                      isPublication={props.isPublication}
+                    />
+                  ) : (
+                    <HTMLContent isTranslated={props.translationState === TRANSLATION_STATE.TRANSLATED}>
+                      {addExternalLinksIcons(props.text)}
+                    </HTMLContent>
+                  )
                 )}
               </div>
-            )}
-
-            <div className='comment__body__content__textAndPreview'>
-              <div
-                className='comment__body__content__text'
-              >
-                <div
-                  className={classnames(`${props.customClass}__body__content__text`, 'comment__body__content__text')}
-                  data-cy='comment__body__content__text'
-                >
-                  {(isFile || (isThread && isFirstCommentFile)
-                    ? (
-                      <CommentFilePreview
-                        apiUrl={props.apiUrl}
-                        apiContent={isFile ? props.apiContent : props.apiContent.firstComment}
-                        isPublication={props.isPublication}
-                      />
-                    ) : (
-                      <HTMLContent isTranslated={props.translationState === TRANSLATION_STATE.TRANSLATED}>
-                        {addExternalLinksIcons(props.text)}
-                      </HTMLContent>
-                    )
-                  )}
-                </div>
-              </div>
-              <LinkPreview apiUrl={props.apiUrl} findLinkInHTML={props.text} />
             </div>
+            <LinkPreview apiUrl={props.apiUrl} findLinkInHTML={props.text} />
           </div>
+          {!props.isPublication && (isFile || actionsAllowed) && (
+            <DropdownMenu
+              buttonCustomClass='comment__body__content__header__actions'
+              buttonIcon='fas fa-ellipsis-v'
+              buttonTooltip={props.t('Actions')}
+            >
+              {(isFile
+                ? (
+                  <IconButton
+                    icon='fas fa-paperclip'
+                    intent='link'
+                    key='openFileComment'
+                    mode='dark'
+                    onClick={props.onClickOpenFileComment}
+                    text={props.t('Open as content')}
+                    textMobile={props.t('Open as content')}
+                  />
+                )
+                : (
+                  <IconButton
+                    icon='fas fa-fw fa-pencil-alt'
+                    intent='link'
+                    key='editComment'
+                    mode='dark'
+                    onClick={props.onClickEditComment}
+                    text={props.t('Edit')}
+                    title={props.t('Edit comment')}
+                    textMobile={props.t('Edit comment')}
+                  />
+                )
+              )}
+
+              {(actionsAllowed &&
+                <IconButton
+                  icon='far fa-fw fa-trash-alt'
+                  intent='link'
+                  key='deleteComment'
+                  mode='dark'
+                  onClick={props.onClickDeleteComment}
+                  text={props.t('Delete')}
+                  title={props.t('Delete comment')}
+                  textMobile={props.t('Delete comment')}
+                />
+              )}
+            </DropdownMenu>
+          )}
         </div>
         <div
           className={classnames(`${props.customClass}__footer`, 'comment__footer')}
@@ -228,7 +223,7 @@ Comment.defaultProps = {
   translationState: TRANSLATION_STATE.DISABLED,
   discussionToggleButtonLabel: 'Comment',
   threadLength: 0,
-  onClickEditComment: () => {},
-  onClickOpenFileComment: () => {},
-  onClickDeleteComment: () => {}
+  onClickEditComment: () => { },
+  onClickOpenFileComment: () => { },
+  onClickDeleteComment: () => { }
 }
