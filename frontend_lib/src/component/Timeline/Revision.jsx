@@ -5,31 +5,21 @@ import Radium from 'radium'
 import { revisionTypeList } from '../../helper.js'
 import PropTypes from 'prop-types'
 
-// require('./Revision.styl') // see https://github.com/tracim/tracim/issues/1156
-const color = require('color')
-
 const Revision = props => {
   const revisionType = revisionTypeList.find(r => r.id === props.revisionType) || { id: '', faIcon: '', label: '' }
-
   const label = revisionType.id === 'status-update'
     ? revisionType.label(props.status.label)
     : props.t(revisionType.label)
 
   return (
     <div
-      className={classnames(`${props.customClass}__messagelist__version`, 'revision')}
+      className={classnames(
+        `${props.customClass}__messagelist__version`,
+        'revision',
+        { revision__current: props.isCurrentVersion }
+      )}
       onClick={props.allowClickOnRevision ? props.onClickRevision : () => {}}
-      style={{
-        cursor: props.allowClickOnRevision ? 'pointer' : 'auto',
-        ...(props.allowClickOnRevision
-          ? {
-            ':hover': {
-              backgroundColor: color(props.customColor).lighten(0.60).hex()
-            }
-          }
-          : {}
-        )
-      }}
+      style={{ cursor: props.allowClickOnRevision ? 'pointer' : 'auto' }}
     >
       <span className='revision__data' data-cy={`revision_data_${props.versionNumber}`}>
 

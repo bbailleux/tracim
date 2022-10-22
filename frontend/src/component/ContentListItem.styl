@@ -1,4 +1,4 @@
-@import "~tracim_frontend_lib/src/css/Variable.styl"
+@import '~tracim_frontend_lib/src/css/Variable.styl'
 
 // NOTE - S.G. - 2021-04-01 - The positioning properties (flex/sizes) of the "columns"
 // should be kept in sync with Favorites.styl
@@ -7,7 +7,8 @@
   display flex
   justify-content space-between
   color fontColor
-  height 60px
+  height listItemHeight
+  min-height listItemHeight
   align-items center
   &:hover
     color fontColor

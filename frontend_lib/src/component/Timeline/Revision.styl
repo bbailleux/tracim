@@ -4,12 +4,14 @@
   width 100%
   background-color offWhite
   margin 0 auto
-  border-top 1px solid mediumGrey
-  height 65px
+  height listItemHeight
   display flex
   flex-direction column
-  &:first-child
-    border none
+  margin-top spacingBetweenListItem
+  border-radius standardBorderRadius
+  opacity 0.6
+  &:hover, &__current
+    opacity 1
   &__data
     display flex
     align-items center
@@ -19,14 +21,18 @@
       min-width 20px
       text-align end
       margin-inline-end textSpacing
+      color darkGrey2
     &__icon
       margin-inline-end textSpacing
+      color darkGrey2
     &__infos
       width 100%
-      padding-inline-start 15px
+      padding-inline-start standardSpacing
       &__created
         margin-inline-start auto
         text-align end
         font-size metadataFontSize
+        color darkGrey2
       &__author
         font-size metadataFontSize
+        color darkGrey2
