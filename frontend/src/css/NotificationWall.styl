@@ -3,7 +3,7 @@
   width 40%
   height 100%
   background-color offWhite
-  z-index 26
+  z-index 10
   display flex
   flex-direction column
   max-width 600px
@@ -107,30 +107,22 @@
 // INFO - MB - 20210204 - overrides ListItemWrapper styles because .contentItem is used in many places
 .notification > .notification__list > .contentItem
   border none
+  margin 0
 
 [dir=ltr] .notification
-  right 0
-  box-shadow shadow-right
+  box-shadow shadow-left
   &__list__item__text__avatars__second
     left twoAuthorsAvatarSize
 
 [dir=rtl] .notification
-  left 0
-  box-shadow shadow-left
+  box-shadow shadow-right
   &__list__item__text__avatars__second
     right twoAuthorsAvatarSize
 
 @media (min-width: min-md) and (max-width: max-md)
   .notification
-    width 50%
+    width 60%
 
 @media (max-width: max-sm)
   .notification
-    width 100%
-
-@media (max-width: max-lg)
-  .notification .btn
-    & > .genericButton__label
-      display none
-    & > .genericButton__icon
-      margin 0px
+    width "calc(100% - %s)" % closedSidebarWidth

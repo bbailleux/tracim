@@ -1,4 +1,4 @@
-@import "~tracim_frontend_lib/src/css/Variable.styl"
+@import '~tracim_frontend_lib/src/css/Variable.styl'
 
 .carousel
   &__main
@@ -9,6 +9,7 @@
     background-color #f0f0f0
     & > .slick-list
       height 100%
+      width 100%
     & .slick-current
       & .carousel__thumbnail__item__preview__content__image
         background-color #7d4e24
@@ -32,8 +33,10 @@
         font-size titleFontSize
   &__item__preview
     height 100%
+    width 100%
     &__content
       height 100%
+      width 100%
       display block
       &__image
         padding standardSpacing
@@ -41,12 +44,14 @@
         align-items center
         display flex
         height 100%
+        width 100%
         & img
           object-fit contain
           cursor pointer
           box-shadow 0 0 8px 2px rgba(0,0,0,0.2)
     &__error
       height 100%
+      width 100%
       display flex
       align-items center
       &__message

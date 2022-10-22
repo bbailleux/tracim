@@ -742,180 +742,182 @@ export class Tracim extends React.Component {
             )}
           />
 
-          <Route
-            render={() => (
-              <NotificationWall
-                onCloseNotificationWall={this.handleClickNotificationButton}
-                isNotificationWallOpen={state.isNotificationWallOpen}
-              />
-            )}
-          />
-
-          <Route path={PAGE.LOGIN} component={Login} />
-
-          <Route path={PAGE.RECENT_ACTIVITIES} component={PersonalRecentActivities} />
-
-          <Route path={PAGE.FORGOT_PASSWORD} component={ForgotPassword} />
-
-          <Route path={PAGE.FORGOT_PASSWORD_NO_EMAIL_NOTIF} component={ForgotPasswordNoEmailNotif} />
-
-          <Route path={PAGE.RESET_PASSWORD} component={ResetPassword} />
-
-          <Route
-            exact
-            path={PAGE.HOME}
-            component={() => {
-              if (!props.workspaceList.length) {
-                return <Home canCreateWorkspace={getUserProfile(props.user.profile).id >= PROFILE.manager.id} />
-              }
-              return <Redirect to={{ pathname: PAGE.RECENT_ACTIVITIES, state: { from: props.location } }} />
-            }}
-          />
-
-          <Route
-            path={PAGE.FAVORITES}
-            render={() => (
-              <div className='tracim__content fullWidthFullHeight'>
-                <Favorites />
-              </div>
-            )}
-          />
-
-          <Route
-            path={PAGE.TODO}
-            render={() => (
-              <div className='tracim__content fullWidthFullHeight'>
-                <ToDo />
-              </div>
-            )}
-          />
-
-          <Route
-            path='/ui/workspaces/:idws?'
-            render={({ match }) => (
-              <WorkspacePage workspaceId={match.params.idws} history={props.history}>
-                <Route
-                  exact
-                  path={PAGE.WORKSPACE.ROOT}
-                  render={() => <Redirect to={{ pathname: PAGE.HOME, state: { from: props.location } }} />}
+          <div>
+            <Route
+              render={() => (
+                <NotificationWall
+                  onCloseNotificationWall={this.handleClickNotificationButton}
+                  isNotificationWallOpen={state.isNotificationWallOpen}
                 />
+              )}
+            />
 
-                <Route
-                  exact
-                  path={`${PAGE.WORKSPACE.ROOT}/:idws`}
-                  render={props2 => // handle '/workspaces/:id' and add '/contents'
-                    <Redirect to={{ pathname: PAGE.WORKSPACE.CONTENT_LIST(props2.match.params.idws), state: { from: props.location } }} />}
-                />
+            <Route path={PAGE.LOGIN} component={Login} />
 
-                <Route
-                  path={[
-                    PAGE.WORKSPACE.CONTENT(':idws', ':type', ':idcts'),
-                    PAGE.WORKSPACE.CONTENT_LIST(':idws'),
-                    PAGE.WORKSPACE.SHARE_FOLDER(':idws')
-                  ]}
-                  render={() => (
-                    <div className='tracim__content fullWidthFullHeight'>
-                      <WorkspaceContent />
-                    </div>
-                  )}
-                />
+            <Route path={PAGE.RECENT_ACTIVITIES} component={PersonalRecentActivities} />
 
-                <Route
-                  path={[
-                    PAGE.WORKSPACE.ADVANCED_DASHBOARD(':idws')
-                  ]}
-                  render={() => (
-                    <OpenWorkspaceAdvanced />
-                  )}
-                />
+            <Route path={PAGE.FORGOT_PASSWORD} component={ForgotPassword} />
 
-                <Route
-                  path={PAGE.WORKSPACE.DASHBOARD(':idws')}
-                  render={() => (
-                    <div className='tracim__content fullWidthFullHeight'>
-                      <Dashboard />
-                    </div>
-                  )}
-                />
+            <Route path={PAGE.FORGOT_PASSWORD_NO_EMAIL_NOTIF} component={ForgotPasswordNoEmailNotif} />
 
-                <Route
-                  exact
-                  path={PAGE.WORKSPACE.PUBLICATIONS(':idws')}
-                  render={() => (
-                    <div className='tracim__content fullWidthFullHeight'>
-                      <Publications />
-                    </div>
-                  )}
-                />
+            <Route path={PAGE.RESET_PASSWORD} component={ResetPassword} />
 
-                <Route
-                  path={PAGE.WORKSPACE.RECENT_ACTIVITIES(':idws')}
-                  render={({ match }) => (
-                    // NOTE - RJ - 2021-03-29 - This redirection is there to avoid breaking old links to recent activities
-                    // We may want to remove this redirection in the future. We will need to fix the related Cypress tests
-                    <Redirect to={PAGE.WORKSPACE.DASHBOARD(match.params.idws)} />
-                  )}
-                />
+            <Route
+              exact
+              path={PAGE.HOME}
+              component={() => {
+                if (!props.workspaceList.length) {
+                  return <Home canCreateWorkspace={getUserProfile(props.user.profile).id >= PROFILE.manager.id} />
+                }
+                return <Redirect to={{ pathname: PAGE.RECENT_ACTIVITIES, state: { from: props.location } }} />
+              }}
+            />
 
-                <Route
-                  path={PAGE.WORKSPACE.AGENDA(':idws')}
-                  render={() => <AppFullscreenRouter />}
-                />
-              </WorkspacePage>
-            )}
-          />
+            <Route
+              path={PAGE.FAVORITES}
+              render={() => (
+                <div className='tracim__content fullWidthFullHeight'>
+                  <Favorites />
+                </div>
+              )}
+            />
 
-          <Route path={PAGE.ACCOUNT} render={() => <Account />} />
+            <Route
+              path={PAGE.TODO}
+              render={() => (
+                <div className='tracim__content fullWidthFullHeight'>
+                  <ToDo />
+                </div>
+              )}
+            />
 
-          <Route
-            exact
-            path={PAGE.ADMIN.USER_EDIT(':userid')}
-            render={() => <AdminAccount />}
-          />
+            <Route
+              path='/ui/workspaces/:idws?'
+              render={({ match }) => (
+                <WorkspacePage workspaceId={match.params.idws} history={props.history}>
+                  <Route
+                    exact
+                    path={PAGE.WORKSPACE.ROOT}
+                    render={() => <Redirect to={{ pathname: PAGE.HOME, state: { from: props.location } }} />}
+                  />
 
-          <Route
-            exact
-            path={PAGE.ADMIN.USER_SPACE_LIST(':userid')}
-            render={() => <AdminAccount openSpacesManagement />}
-          />
+                  <Route
+                    exact
+                    path={`${PAGE.WORKSPACE.ROOT}/:idws`}
+                    render={props2 => // handle '/workspaces/:id' and add '/contents'
+                      <Redirect to={{ pathname: PAGE.WORKSPACE.CONTENT_LIST(props2.match.params.idws), state: { from: props.location } }} />}
+                  />
 
-          <Route
-            exact
-            path={PAGE.PUBLIC_PROFILE(':userid')}
-            component={PublicProfile}
-          />
+                  <Route
+                    path={[
+                      PAGE.WORKSPACE.CONTENT(':idws', ':type', ':idcts'),
+                      PAGE.WORKSPACE.CONTENT_LIST(':idws'),
+                      PAGE.WORKSPACE.SHARE_FOLDER(':idws')
+                    ]}
+                    render={() => (
+                      <div className='tracim__content fullWidthFullHeight'>
+                        <WorkspaceContent />
+                      </div>
+                    )}
+                  />
 
-          <Route
-            exact
-            path={[
-              PAGE.ADMIN.USER,
-              PAGE.ADMIN.WORKSPACE,
-              PAGE.AGENDA,
-              PAGE.WORKSPACE.CONTENT_EDITION(),
-              PAGE.WORKSPACE.GALLERY()
-            ]}
-            render={() => <AppFullscreenRouter />}
-          />
+                  <Route
+                    path={[
+                      PAGE.WORKSPACE.ADVANCED_DASHBOARD(':idws')
+                    ]}
+                    render={() => (
+                      <OpenWorkspaceAdvanced />
+                    )}
+                  />
 
-          <Route path='/wip/:cp' component={WIPcomponent} /> {/* for testing purpose only */}
+                  <Route
+                    path={PAGE.WORKSPACE.DASHBOARD(':idws')}
+                    render={() => (
+                      <div className='tracim__content fullWidthFullHeight'>
+                        <Dashboard />
+                      </div>
+                    )}
+                  />
 
-          <Route
-            path={PAGE.SEARCH_RESULT}
-            component={props.system.config.search_engine === SEARCH_TYPE.ADVANCED
-              ? AdvancedSearch
-              : SimpleSearch}
-          />
+                  <Route
+                    exact
+                    path={PAGE.WORKSPACE.PUBLICATIONS(':idws')}
+                    render={() => (
+                      <div className='tracim__content fullWidthFullHeight'>
+                        <Publications />
+                      </div>
+                    )}
+                  />
 
-          <Route path={PAGE.GUEST_UPLOAD(':token')} component={GuestUpload} />
-          <Route path={PAGE.GUEST_DOWNLOAD(':token')} component={GuestDownload} />
-          <Route path={PAGE.JOIN_WORKSPACE} component={JoinWorkspace} />
-          <Route path={PAGE.CONTENT(':idcts')} component={ContentRedirection} />
-          <Route path={PAGE.WORKSPACE.PUBLICATION(':idws', ':idcts')} component={ContentRedirection} />
+                  <Route
+                    path={PAGE.WORKSPACE.RECENT_ACTIVITIES(':idws')}
+                    render={({ match }) => (
+                      // NOTE - RJ - 2021-03-29 - This redirection is there to avoid breaking old links to recent activities
+                      // We may want to remove this redirection in the future. We will need to fix the related Cypress tests
+                      <Redirect to={PAGE.WORKSPACE.DASHBOARD(match.params.idws)} />
+                    )}
+                  />
 
-          {/* the 3 divs below must stay here so that they always exist in the DOM regardless of the route */}
-          <div id='appFullscreenContainer' />
-          <div id='appFeatureContainer' />
-          <div id='popupCreateContentContainer' />
+                  <Route
+                    path={PAGE.WORKSPACE.AGENDA(':idws')}
+                    render={() => <AppFullscreenRouter />}
+                  />
+                </WorkspacePage>
+              )}
+            />
+
+            <Route path={PAGE.ACCOUNT} render={() => <Account />} />
+
+            <Route
+              exact
+              path={PAGE.ADMIN.USER_EDIT(':userid')}
+              render={() => <AdminAccount />}
+            />
+
+            <Route
+              exact
+              path={PAGE.ADMIN.USER_SPACE_LIST(':userid')}
+              render={() => <AdminAccount openSpacesManagement />}
+            />
+
+            <Route
+              exact
+              path={PAGE.PUBLIC_PROFILE(':userid')}
+              component={PublicProfile}
+            />
+
+            <Route
+              exact
+              path={[
+                PAGE.ADMIN.USER,
+                PAGE.ADMIN.WORKSPACE,
+                PAGE.AGENDA,
+                PAGE.WORKSPACE.CONTENT_EDITION(),
+                PAGE.WORKSPACE.GALLERY()
+              ]}
+              render={() => <AppFullscreenRouter />}
+            />
+
+            <Route path='/wip/:cp' component={WIPcomponent} /> {/* for testing purpose only */}
+
+            <Route
+              path={PAGE.SEARCH_RESULT}
+              component={props.system.config.search_engine === SEARCH_TYPE.ADVANCED
+                ? AdvancedSearch
+                : SimpleSearch}
+            />
+
+            <Route path={PAGE.GUEST_UPLOAD(':token')} component={GuestUpload} />
+            <Route path={PAGE.GUEST_DOWNLOAD(':token')} component={GuestDownload} />
+            <Route path={PAGE.JOIN_WORKSPACE} component={JoinWorkspace} />
+            <Route path={PAGE.CONTENT(':idcts')} component={ContentRedirection} />
+            <Route path={PAGE.WORKSPACE.PUBLICATION(':idws', ':idcts')} component={ContentRedirection} />
+
+            {/* the 3 divs below must stay here so that they always exist in the DOM regardless of the route */}
+            <div id='appFullscreenContainer' />
+            <div id='appFeatureContainer' />
+            <div id='popupCreateContentContainer' />
+          </div>
         </div>
         {state.tooManyUsers && (
           <div className='tracim__pageBlock'>

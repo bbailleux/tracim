@@ -67,6 +67,9 @@ div.tox-shadowhost.tox-fullscreen, div.tox.tox-tinymce.tox-fullscreen
 
 .sidebarpagecontainer
   display flex
+  & > div:last-child
+    flex 1
+    min-width "calc(100% - %s)" % sidebarWidth
 
 .nopadding
   padding 0
@@ -97,61 +100,6 @@ div.tox-shadowhost.tox-fullscreen, div.tox.tox-tinymce.tox-fullscreen
   font-size titleFontSize
   margin-bottom standardSpacing
 
-.genericBtnInfoDashboard
-  &__btn
-    display flex
-    margin-bottom 30px
-    border-width 1px
-    border-style solid
-    border-radius standardBorderRadius
-    padding standardSpacing 25px
-    cursor pointer
-    &:hover
-      color offWhite
-    &__icon
-      margin-inline-end 20px
-      font-size bigIconSize
-  &__info
-    border borderStyle
-    border-radius standardBorderRadius
-    padding 15px 25px
-    &__text
-      margin-bottom 35px
-    &__link
-      display inline-block
-      margin-bottom 15px
-      border borderStyle
-      border-radius standardBorderRadius
-      padding 15px
-
-.notched // Côme - 2018/09/27 - this class requires a border-color to be defined (eg. with primaryColorBorder)
-  &::before
-    content ''
-    position absolute
-    width 28px
-    height 25px
-    border-style solid
-    top 0
-    right 0
-    border-top-width 6px
-    border-inline-end-width 6px
-    border-bottom-width 0
-    border-inline-start-width 0
-    border-color inherit
-  &::after
-    content ''
-    position absolute
-    width 28px
-    height 25px
-    border-style solid
-    bottom 0
-    left 0
-    border-top-width 0
-    border-inline-end-width 0
-    border-bottom-width 6px
-    border-inline-start-width 6px
-    border-color inherit
-
 #appFullscreenContainer
   height 100vh
   overflow hidden
@@ -163,6 +111,11 @@ div.tox-shadowhost.tox-fullscreen, div.tox.tox-tinymce.tox-fullscreen
       width auto
       height auto
       overflow-y auto
+  &:empty
+    display none
+
+#appFeatureContainer:empty
+  display none
 
 .popover-body
   font-family Quicksand
