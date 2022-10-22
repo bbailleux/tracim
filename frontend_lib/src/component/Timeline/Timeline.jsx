@@ -166,12 +166,16 @@ export class Timeline extends React.Component {
               case TIMELINE_TYPE.COMMENT:
               case TIMELINE_TYPE.COMMENT_AS_FILE: {
                 let isTheSameDateThatLastComment = false
+                let isTheSameAuthorThatLastComment = false
                 if (index !== 0) {
                   const lastContent = props.timelineData[index - 1]
+                  const isLastContentAComment = (
+                    lastContent.timelineType === TIMELINE_TYPE.COMMENT || lastContent.timelineType === TIMELINE_TYPE.COMMENT_AS_FILE
+                  )
                   const currentContentDate = formatAbsoluteDate(content.created_raw, props.loggedUser.lang)
                   const lastContentDate = formatAbsoluteDate(lastContent.created_raw, props.loggedUser.lang)
-                  isTheSameDateThatLastComment = (currentContentDate === lastContentDate) &&
-                    (lastContent.timelineType === TIMELINE_TYPE.COMMENT || lastContent.timelineType === TIMELINE_TYPE.COMMENT_AS_FILE)
+                  isTheSameDateThatLastComment = (currentContentDate === lastContentDate) && isLastContentAComment
+                  isTheSameAuthorThatLastComment = (content.author.user_id === lastContent.author.user_id) && isLastContentAComment
                 }
 
                 return (
@@ -183,6 +187,7 @@ export class Timeline extends React.Component {
                     contentId={Number(content.content_id)}
                     apiContent={content}
                     isTheSameDateThatLastComment={isTheSameDateThatLastComment}
+                    isTheSameAuthorThatLastComment={isTheSameAuthorThatLastComment}
                     workspaceId={Number(props.workspaceId)}
                     author={content.author}
                     loggedUser={props.loggedUser}

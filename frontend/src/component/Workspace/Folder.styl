@@ -4,6 +4,8 @@ folderclose()
   height 0
   visibility hidden
   opacity 0
+  & .folder__header
+    margin-top 0
 
 folderopen()
   height fit-content
@@ -11,6 +13,8 @@ folderopen()
   opacity 1
   visibility visible
   transition opacity 0.3s
+  & .folder__header
+    margin-top textSpacing
 
 .folder
   padding-inline-start 20px
@@ -20,12 +24,12 @@ folderopen()
       background-color lightGrey1
   > .folder__content
     folderclose()
-    & > .file, > .folder
+    & > .content, > .folder
       folderclose()
   &.active
     > .folder__content
       folderopen()
-      > .file, > .folder
+      > .content, > .folder
         folderopen()
   &__header
     position relative

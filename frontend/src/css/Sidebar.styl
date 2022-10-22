@@ -63,7 +63,7 @@ spacingInsideMenu = 40px
       &.sidebar__item__inside_menu
         padding-inline-start spacingInsideMenu - 5px
       &.sidebar__item__space
-        padding-inline-start spacingInsideMenu
+        padding-inline-start spacingInsideMenu + 5px
       &.sidebar__search
         padding-inline-start textSpacing
     &__name
@@ -90,15 +90,18 @@ spacingInsideMenu = 40px
         text-align end
       & > *
         color var(--sidebarFontColor)
-        padding-inline-start 0
       &:hover
         background-color var(--sidebarColorDarken)
     &__withoutChildren
       padding-inline-start 20px
     &__foldChildren
       height 100%
-      &:hover > .iconbutton__icon
-        color sidebarFontColorHover
+      padding-inline-end 0
+      padding-inline-start 0
+      &:hover
+        background-color transparent
+        & > .iconbutton__icon
+          color sidebarFontColorHover
     &__dragNdrop
       margin-inline-start textSpacing
     &__menu

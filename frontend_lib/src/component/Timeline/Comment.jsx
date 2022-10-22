@@ -41,7 +41,7 @@ const Comment = props => {
       className={classnames(
         `${props.customClass}__messagelist__item`,
         'comment',
-        { isTheSameDateThatLastComment: props.isTheSameDateThatLastComment }
+        { isTheSameDateAndAuthorThatLastComment: (props.isTheSameDateThatLastComment && props.isTheSameAuthorThatLastComment) }
       )}
     >
       {!props.isPublication && (
@@ -198,6 +198,8 @@ Comment.propTypes = {
   workspaceId: PropTypes.number.isRequired,
   customClass: PropTypes.string,
   customColor: PropTypes.string,
+  isTheSameAuthorThatLastComment: PropTypes.bool,
+  isTheSameDateThatLastComment: PropTypes.bool,
   text: PropTypes.string,
   created: PropTypes.string.isRequired,
   fromMe: PropTypes.bool,
@@ -218,6 +220,8 @@ Comment.propTypes = {
 Comment.defaultProps = {
   customClass: '',
   customColor: 'transparent',
+  isTheSameAuthorThatLastComment: false,
+  isTheSameDateThatLastComment: false,
   text: '',
   fromMe: false,
   translationState: TRANSLATION_STATE.DISABLED,
