@@ -586,7 +586,7 @@ export class Publications extends React.Component {
             ref={publication.id === currentPublicationId ? this.currentPublicationRef : undefined}
             memberList={props.currentWorkspace.memberList}
             onClickCopyLink={() => this.handleClickCopyLink(publication)}
-            isPublication
+            isNews
             inRecentActivities={false}
             onClickEdit={() => this.handleClickEdit(publication)}
             showCommentList

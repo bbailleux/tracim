@@ -180,7 +180,7 @@ export class Timeline extends React.Component {
 
                 return (
                   <Comment
-                    isPublication={false}
+                    isNews={false}
                     customClass={`${props.customClass}__comment`}
                     customColor={props.customColor}
                     apiUrl={props.apiUrl}
@@ -314,8 +314,6 @@ Timeline.propTypes = {
   allowClickOnRevision: PropTypes.bool,
   availableStatusList: PropTypes.array,
   currentVersionId: PropTypes.number,
-  deprecatedStatus: PropTypes.object,
-  disableComment: PropTypes.bool,
   canLoadMoreTimelineItems: PropTypes.func,
   contentId: PropTypes.number,
   contentType: PropTypes.string,
@@ -363,8 +361,6 @@ Timeline.defaultProps = {
   },
   disableComment: false,
   currentVersionId: 0,
-  customClass: '',
-  customColor: '',
   id: '',
   invalidMentionList: [],
   isArchived: false,

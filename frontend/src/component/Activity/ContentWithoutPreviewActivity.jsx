@@ -17,7 +17,7 @@ export const ContentWithoutPreviewActivity = props => {
         lastModificationEntityType={props.lastModificationEntityType}
         lastModificationSubEntityType={props.lastModificationSubEntityType}
         lastModifier={props.activity.newestMessage.fields.author}
-        isPublication={false}
+        isNews={false}
         modifiedDate={props.activity.newestMessage.created}
         onClickCopyLink={props.onClickCopyLink}
         onEventClicked={props.onEventClicked}

@@ -77,17 +77,8 @@
 
       &__header
         display flex
-        align-items center
-        flex-direction row
-        margin-bottom standardSpacing
-        font-size metadataFontSize
-        &__meta
-          flex 1
-          &__author
-            overflow-wrap anywhere
-            font-size standardFontSize
-            &:hover
-              text-decoration underline
+        height standardFontSize
+        align-items baseline
         &__actions.dropdownMenuButton
           padding 0
           color darkGrey2
@@ -98,6 +89,9 @@
             color fontColor
           &:active, &:focus
             display unset
+        &__modified
+          font-size metadataFontSize
+          color darkGrey2
 
   &__footer
     display flex

@@ -336,7 +336,7 @@ export const NotificationWall = props => {
       }</span>`
     }
 
-    const isPublication = notification.content && notification.content.contentNamespace === CONTENT_NAMESPACE.PUBLICATION
+    const isNews = notification.content && notification.content.contentNamespace === CONTENT_NAMESPACE.PUBLICATION
 
     let contentUrl = notification.content ? PAGE.CONTENT(notification.content.id) : ''
 
@@ -368,7 +368,7 @@ export const NotificationWall = props => {
           }
 
           return {
-            title: isPublication ? props.t('New publication') : props.t('New content'),
+            title: isNews ? props.t('New publication') : props.t('New content'),
             text: props.t('{{author}} created {{content}}{{workspaceInfo}}', i18nOpts),
             url: contentUrl
           }
@@ -392,7 +392,7 @@ export const NotificationWall = props => {
           }
 
           return {
-            title: isPublication ? props.t('Publication updated') : props.t('Content updated'),
+            title: isNews ? props.t('Publication updated') : props.t('Content updated'),
             text: props.t('{{author}} updated {{content}}{{workspaceInfo}}', i18nOpts),
             url: contentUrl
           }
@@ -408,14 +408,14 @@ export const NotificationWall = props => {
           }
 
           return {
-            title: isPublication ? props.t('Publication deleted') : props.t('Content deleted'),
+            title: isNews ? props.t('Publication deleted') : props.t('Content deleted'),
             text: props.t('{{author}} deleted {{content}}{{workspaceInfo}}', i18nOpts),
             url: contentUrl
           }
         }
         case TLM_EVENT.UNDELETED: {
           return {
-            title: isPublication ? props.t('Publication restored') : props.t('Content restored'),
+            title: isNews ? props.t('Publication restored') : props.t('Content restored'),
             text: props.t('{{author}} restored {{content}}{{workspaceInfo}}', i18nOpts),
             url: contentUrl
           }

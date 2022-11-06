@@ -296,7 +296,7 @@ export class FeedItemWithPreview extends React.Component {
         ? props.t('Hide discussion')
         : `${props.t('Show discussion')} (${commentList.length})`
     } else {
-      if (props.isPublication) {
+      if (props.isNews) {
         return state.isDiscussionDisplayed
           ? props.t('Hide comment area')
           : props.t('Comment', { context: 'verb' })
@@ -309,7 +309,7 @@ export class FeedItemWithPreview extends React.Component {
 
     let previewTitle = ''
     if (props.inRecentActivities) {
-      previewTitle = props.isPublication
+      previewTitle = props.isNews
         ? props.t('Show in news')
         : props.t('Open_action')
     } else {
@@ -345,7 +345,7 @@ export class FeedItemWithPreview extends React.Component {
 
     const isContentDeleted = props.lastModificationEntityType === TLM_ET.CONTENT && props.lastModificationType === TLM_CET.DELETED
 
-    const contentType = props.isPublication
+    const contentType = props.isNews
       ? { label: props.t('Publication'), faIcon: 'fas fa-stream', hexcolor: COLORS.PUBLICATION }
       : (
         props.appList.find(app => app.slug === `contents/${props.content.type}`) ||
@@ -360,7 +360,7 @@ export class FeedItemWithPreview extends React.Component {
           content={props.content}
           contentAvailable={props.contentAvailable}
           contentType={contentType}
-          isPublication={props.isPublication}
+          isNews={props.isNews}
           eventList={props.eventList}
           lastModificationType={props.lastModificationType}
           lastModificationEntityType={props.lastModificationEntityType}
@@ -378,7 +378,7 @@ export class FeedItemWithPreview extends React.Component {
             {(shouldShowComment
               ? (commentToShow &&
                 <Comment
-                  isPublication
+                  isNews
                   customClass='feedItem__publication'
                   apiUrl={FETCH_CONFIG.apiUrl}
                   contentId={Number(props.content.id)}
@@ -413,7 +413,7 @@ export class FeedItemWithPreview extends React.Component {
               : (
                 <div className='feedItem__content' title={previewTitle}>
                   <Preview
-                    fallbackToAttachedFile={props.isPublication && props.content.type === CONTENT_TYPE.FILE}
+                    fallbackToAttachedFile={props.isNews && props.content.type === CONTENT_TYPE.FILE}
                     content={
                       state.contentTranslationState === TRANSLATION_STATE.TRANSLATED
                         ? { ...props.content, translatedRawContent: state.translatedRawContent }
@@ -434,7 +434,7 @@ export class FeedItemWithPreview extends React.Component {
                     discussionToggleButtonLabel={this.getDiscussionToggleButtonLabel(commentList)}
                     discussionToggleButtonLabelMobile={commentList.length > 0 ? commentList.length.toString() : ''}
                     showCommentList={props.showCommentList}
-                    isPublication={props.isPublication}
+                    isNews={props.isNews}
                     isCommentListEmpty={commentList.length === 0}
                     customColor={contentType.hexcolor}
                   />
@@ -511,7 +511,7 @@ FeedItemWithPreview.propTypes = {
   contentAvailable: PropTypes.bool.isRequired,
   onClickCopyLink: PropTypes.func.isRequired,
   workspaceId: PropTypes.number.isRequired,
-  isPublication: PropTypes.bool.isRequired,
+  isNews: PropTypes.bool.isRequired,
   inRecentActivities: PropTypes.bool.isRequired,
   allowEdition: PropTypes.bool,
   breadcrumbsList: PropTypes.array,
