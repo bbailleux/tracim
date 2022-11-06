@@ -8,15 +8,16 @@ import { TRANSLATION_STATE } from '../../translation.js'
 import TranslateButton from '../Button/TranslateButton.jsx'
 import EmojiReactions from '../../container/EmojiReactions.jsx'
 import DropdownMenu from '../DropdownMenu/DropdownMenu.jsx'
+import Popover from '../Popover/Popover.jsx'
 import IconButton from '../Button/IconButton.jsx'
 import LinkPreview from '../LinkPreview/LinkPreview.jsx'
 import ProfileNavigation from '../../component/ProfileNavigation/ProfileNavigation.jsx'
 import {
-  ROLE,
   CONTENT_TYPE,
-  formatAbsoluteDate,
+  ROLE,
+  addExternalLinksIcons,
   displayDistanceDate,
-  addExternalLinksIcons
+  formatAbsoluteDate
 } from '../../helper.js'
 
 import CommentFilePreview from './CommentFilePreview.jsx'
@@ -28,25 +29,34 @@ function areCommentActionsAllowed (loggedUser, commentAuthorId) {
   )
 }
 
-const Comment = props => {
+const Comment = (props) => {
+  const firstComment = props.firstComment || props.apiContent.firstComment
+  const styleSent = {
+    borderColor: props.customColor
+  }
+
   const createdFormated = formatAbsoluteDate(props.created, props.loggedUser.lang)
-  const createdDistance = displayDistanceDate(props.created, props.loggedUser.lang)
+
+  const actionsAllowed = areCommentActionsAllowed(props.loggedUser, props.author.user_id)
+  const readableCreationDate = formatAbsoluteDate(props.creationDate, props.loggedUser.lang, 'PPPPp')
+  const createdDistance = displayDistanceDate(props.creationDate, props.loggedUser.lang)
+  const isModified = props.modificationDate ? props.modificationDate !== props.creationDate : false
   const isFile = (props.apiContent.content_type || props.apiContent.type) === CONTENT_TYPE.FILE
   const isThread = (props.apiContent.content_type || props.apiContent.type) === CONTENT_TYPE.THREAD
-  const isFirstCommentFile = props.apiContent.firstComment && (props.apiContent.firstComment.content_type || props.apiContent.firstComment.type) === CONTENT_TYPE.FILE
-  const actionsAllowed = areCommentActionsAllowed(props.loggedUser, props.author.user_id)
+  const isFirstCommentFile = firstComment && (firstComment.content_type || firstComment.type) === CONTENT_TYPE.FILE
+  const readableModificationDate = isModified ? formatAbsoluteDate(props.modificationDate, props.loggedUser.lang, 'PPPPp') : null
 
   return (
     <div
       className={classnames(
         `${props.customClass}__messagelist__item`,
-        'comment',
+        'timeline_comment',
         { isTheSameDateAndAuthorThatLastComment: (props.isTheSameDateThatLastComment && props.isTheSameAuthorThatLastComment) }
       )}
     >
       {!props.isPublication && (
         <div
-          className={classnames('comment__header', {
+          className={classnames('timeline_comment__header', {
             sent: props.fromMe,
             received: !props.fromMe
           })}
@@ -67,7 +77,7 @@ const Comment = props => {
           </ProfileNavigation>
 
           <div
-            className='comment__header__createdDate'
+            className='timeline_comment__header__createdDate'
             title={createdFormated}
           >
             {createdDistance}
@@ -76,16 +86,16 @@ const Comment = props => {
       )}
 
       <div
-        className={classnames(`${props.customClass}`, 'comment__body')}
+        className={classnames(`${props.customClass}`, 'timeline_comment__body')}
       >
-        <div className={classnames(`${props.customClass}__body__content`, 'comment__body__content')}>
-          <div className='comment__body__content__textAndPreview'>
+        <div className={classnames(`${props.customClass}__body__content`, 'timeline_comment__body__content')}>
+          <div className='timeline_comment__body__content__textAndPreview'>
             <div
-              className='comment__body__content__text'
+              className='timeline_comment__body__content__text'
             >
               <div
-                className={classnames(`${props.customClass}__body__content__text`, 'comment__body__content__text')}
-                data-cy='comment__body__content__text'
+                className={classnames(`${props.customClass}__body__content__text`, 'timeline_comment__body__content__text')}
+                data-cy='timeline_comment__body__content__text'
               >
                 {(isFile || (isThread && isFirstCommentFile)
                   ? (
@@ -106,7 +116,7 @@ const Comment = props => {
           </div>
           {!props.isPublication && (isFile || actionsAllowed) && (
             <DropdownMenu
-              buttonCustomClass='comment__body__content__header__actions'
+              buttonCustomClass='timeline_comment__body__content__header__actions'
               buttonIcon='fas fa-ellipsis-v'
               buttonTooltip={props.t('Actions')}
             >
@@ -152,7 +162,7 @@ const Comment = props => {
           )}
         </div>
         <div
-          className={classnames(`${props.customClass}__footer`, 'comment__footer')}
+          className={classnames(`${props.customClass}__footer`, 'timeline__comment__footer')}
         >
           {!isFile && (
             <TranslateButton
@@ -162,7 +172,7 @@ const Comment = props => {
               onChangeTargetLanguageCode={props.onChangeTranslationTargetLanguageCode}
               targetLanguageCode={props.translationTargetLanguageCode}
               targetLanguageList={props.translationTargetLanguageList}
-              dataCy='commentTranslateButton'
+              dataCy='timeline_commentTranslateButton'
             />
           )}
           <EmojiReactions
@@ -190,44 +200,50 @@ const Comment = props => {
 export default translate()(Comment)
 
 Comment.propTypes = {
+  apiContent: PropTypes.object.isRequired,
+  firstComment: PropTypes.object,
   author: PropTypes.object.isRequired,
+  contentId: PropTypes.number.isRequired,
   isPublication: PropTypes.bool.isRequired,
   loggedUser: PropTypes.object.isRequired,
-  contentId: PropTypes.number.isRequired,
-  apiContent: PropTypes.object.isRequired,
+  onChangeTranslationTargetLanguageCode: PropTypes.func.isRequired,
+  translationTargetLanguageCode: PropTypes.string.isRequired,
+  translationTargetLanguageList: PropTypes.arrayOf(PropTypes.object).isRequired,
   workspaceId: PropTypes.number.isRequired,
+  creationDate: PropTypes.string,
   customClass: PropTypes.string,
   customColor: PropTypes.string,
   isTheSameAuthorThatLastComment: PropTypes.bool,
   isTheSameDateThatLastComment: PropTypes.bool,
   text: PropTypes.string,
   created: PropTypes.string.isRequired,
+  discussionToggleButtonLabel: PropTypes.string,
   fromMe: PropTypes.bool,
-  translationState: PropTypes.oneOf(Object.values(TRANSLATION_STATE)),
-  onClickEditComment: PropTypes.func,
+  modificationDate: PropTypes.string,
   onClickDeleteComment: PropTypes.func,
+  onClickEditComment: PropTypes.func,
   onClickOpenFileComment: PropTypes.func,
-  onClickTranslate: PropTypes.func.isRequired,
   onClickRestore: PropTypes.func.isRequired,
-  onChangeTranslationTargetLanguageCode: PropTypes.func.isRequired,
-  translationTargetLanguageCode: PropTypes.string.isRequired,
-  translationTargetLanguageList: PropTypes.arrayOf(PropTypes.object).isRequired,
   onClickToggleCommentList: PropTypes.func,
-  discussionToggleButtonLabel: PropTypes.string.isRequired,
-  threadLength: PropTypes.number
+  onClickTranslate: PropTypes.func.isRequired,
+  text: PropTypes.string,
+  threadLength: PropTypes.number,
+  translationState: PropTypes.oneOf(Object.values(TRANSLATION_STATE))
 }
 
 Comment.defaultProps = {
+  creationDate: '',
   customClass: '',
   customColor: 'transparent',
   isTheSameAuthorThatLastComment: false,
   isTheSameDateThatLastComment: false,
-  text: '',
   fromMe: false,
-  translationState: TRANSLATION_STATE.DISABLED,
-  discussionToggleButtonLabel: 'Comment',
-  threadLength: 0,
+  discussionToggleButtonLabel: 'timeline_comment',
   onClickEditComment: () => { },
   onClickOpenFileComment: () => { },
-  onClickDeleteComment: () => { }
+  onClickDeleteComment: () => { },
+  modificationDate: '',
+  text: '',
+  threadLength: 0,
+  translationState: TRANSLATION_STATE.DISABLED
 }

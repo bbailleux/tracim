@@ -2,9 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import { newFlashMessage } from '../../action-creator.sync.js'
-import {
-  IconButton
-} from 'tracim_frontend_lib'
+import { IconButton } from 'tracim_frontend_lib'
 
 export class Password extends React.Component {
   constructor (props) {

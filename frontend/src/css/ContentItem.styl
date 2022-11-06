@@ -1,10 +1,12 @@
-.content
+.contentItem
   position relative
   background-color offWhite
   border-radius standardBorderRadius
   margin-top spacingBetweenListItem
   &.item-last
     margin-bottom standardSpacing
+
+.content
   &__item
     padding standardSpacing 0
   &__type
@@ -32,10 +34,6 @@
     align-items center
     &__icon
       font-size bigIconSize
-  & .dragHandle
-    display none
-  &:hover > .dragHandle
-    display block
 
 @media (max-width: max-xs)
   .content

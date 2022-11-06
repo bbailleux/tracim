@@ -27,7 +27,7 @@ export const SpaceSubscriptionsRequests = props => {
               {request.state === 'pending' && (
                 <DropdownMenu
                   buttonLabel={props.t('Manage request')}
-                  buttonCustomClass='primaryColorBgHoverworkspace_advanced__subscriptionRequests__button'
+                  buttonCustomClass='primaryColorBgHover workspace_advanced__subscriptionRequests__button'
                   isButton
                 >
                   <button

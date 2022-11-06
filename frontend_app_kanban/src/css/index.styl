@@ -127,6 +127,10 @@ cardWidth = 280px
         flex-direction row
 
     & .cardPopup__container
+      width unset
+      min-width 550px
+      display flex
+      flex-direction column
       overflow auto
 
     & [type=checkbox]
@@ -165,6 +169,7 @@ cardWidth = 280px
           color unset
           font-size standardFontSize
           padding-inline-start textSpacing
+          border none
 
       &_buttons
         margin-bottom 0

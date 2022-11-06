@@ -83,8 +83,7 @@ export const SpaceDescription = (props) => {
                 <div className='dashboard__workspace__detail__description__missing'>
                   {props.t("This space doesn't have a description yet.")}
                 </div>
-              )
-            }
+              )}
             {!props.isReadOnlyMode && (
               <div className='workspace_advanced__description__bottom'>
                 <IconButton
@@ -96,8 +95,7 @@ export const SpaceDescription = (props) => {
               </div>
             )}
           </div>
-        )
-      }
+        )}
     </div>
   )
 }

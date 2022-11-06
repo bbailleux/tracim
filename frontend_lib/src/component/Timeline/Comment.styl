@@ -6,17 +6,17 @@
   &:hover
     color fontColor
 
-.comment
+.timeline__comment
   position relative
   margin textSpacing 0
   &:last-child
     margin-bottom 0
   &.isTheSameDateAndAuthorThatLastComment
     margin-top 0
-    & .comment__header
+    & .timeline__comment__header
       display none
 
-  &:hover .comment__body__content__header__actions.dropdownMenuButton
+  &:hover .timeline__comment__body__content__header__actions.dropdownMenuButton
     display unset
 
   &__header
@@ -60,6 +60,8 @@
       display flex
       flex-direction row
       flex 1
+      min-width 0
+
       &__text
         img
           max-width 100%

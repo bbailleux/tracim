@@ -3,7 +3,6 @@ import Radium from 'radium'
 import PropTypes from 'prop-types'
 import {
   AgendaInfo,
-  BtnSwitch,
   ConfirmPopup,
   IconButton,
   Popover,

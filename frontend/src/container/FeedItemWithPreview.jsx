@@ -27,6 +27,7 @@ import {
   tinymceRemove,
   TLM_ENTITY_TYPE as TLM_ET,
   TLM_CORE_EVENT_TYPE as TLM_CET,
+  TLM_SUB_TYPE as TLM_ST,
   TracimComponent,
   TRANSLATION_STATE
 } from 'tracim_frontend_lib'
@@ -38,6 +39,10 @@ export class FeedItemWithPreview extends React.Component {
 
     props.registerCustomEventHandlerList([
       { name: CUSTOM_EVENT.ALL_APP_CHANGE_LANGUAGE, handler: this.handleAllAppChangeLanguage }
+    ])
+
+    props.registerLiveMessageHandlerList([
+      { entityType: TLM_ET.CONTENT, coreEntityType: TLM_CET.MODIFIED, optionalSubType: TLM_ST.COMMENT, handler: this.handleCommentModified }
     ])
 
     this.state = {
@@ -95,6 +100,12 @@ export class FeedItemWithPreview extends React.Component {
       tinymceRemove(wysiwygId)
       globalThis.wysiwyg(wysiwygId, data, this.handleChangeNewComment)
     }
+  }
+
+  // TLM Handlers
+
+  handleCommentModified = (data) => {
+    this.props.updateComment(data)
   }
 
   getWysiwygId = (contentId) => `#wysiwygTimelineComment${contentId}`
@@ -313,6 +324,9 @@ export class FeedItemWithPreview extends React.Component {
         ? this.getFirstComment()
         : null
     )
+    if (shouldShowComment && props.inRecentActivities) {
+      props.content.firstComment = commentToShow
+    }
 
     const commentList = this.getTimelineData()
 
@@ -369,10 +383,12 @@ export class FeedItemWithPreview extends React.Component {
                   apiUrl={FETCH_CONFIG.apiUrl}
                   contentId={Number(props.content.id)}
                   apiContent={props.content}
+                  firstComment={commentToShow}
                   workspaceId={Number(props.workspaceId)}
                   author={commentToShow.author}
                   loggedUser={loggedUser}
-                  created={commentToShow.created_raw || commentToShow.createdRaw || commentToShow.created}
+                  creationDate={commentToShow.created_raw || commentToShow.createdRaw || commentToShow.created}
+                  modificationDate={commentToShow.modified}
                   text={
                     state.contentTranslationState === TRANSLATION_STATE.TRANSLATED
                       ? state.translatedRawContent

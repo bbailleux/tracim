@@ -8,9 +8,7 @@ import {
   IconButton
 } from 'tracim_frontend_lib'
 import DropdownLang from '../DropdownLang.jsx'
-import {
-  editableUserAuthTypeList
-} from '../../util/helper.js'
+import { editableUserAuthTypeList } from '../../util/helper.js'
 
 require('./PersonalData.styl')
 

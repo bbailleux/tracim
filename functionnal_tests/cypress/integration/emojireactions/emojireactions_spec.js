@@ -25,7 +25,7 @@ function addEmojiReaction (container, title, emoji) {
     .click()
   cy.get(EMOJI_MART_SELECTOR)
     .should('not.exist')
-  cy.get(`${container} ${emojiButtonClassName}.highlighted`)
+  cy.get(`${container} ${emojiButtonClassName}.primaryColorBgOpacity`)
     .should('be.visible')
   cy.contains(`${container} ${emojiValueClassName}`, emoji)
 }
@@ -65,10 +65,10 @@ describe('Reactions', function () {
       })
     })
 
-    const container = '.comment__footer'
+    const container = '.timeline__comment__footer'
 
     it('should allow creating and deleting reactions in a comment', () => {
-      cy.get(`.comment__footer ${emojiButtonClassName}`)
+      cy.get(`.timeline__comment__footer ${emojiButtonClassName}`)
         .should('not.exist')
 
       addEmojiReaction(container, 'grinning', '😀')

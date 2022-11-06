@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
 import {
+  CONTENT_NAMESPACE,
   formatAbsoluteDate,
   appContentFactory,
   BREADCRUMBS_TYPE,
@@ -38,7 +39,6 @@ import {
   setLocalStorageItem
 } from 'tracim_frontend_lib'
 import {
-  CONTENT_NAMESPACE,
   FETCH_CONFIG,
   findUserRoleIdInWorkspace
 } from '../util/helper.js'
@@ -331,7 +331,9 @@ export class Publications extends React.Component {
 
   getPublicationPage = async (pageToken = '') => {
     const { props } = this
-    this.setState({ loading: true })
+    if (pageToken === '') {
+      this.setState({ loading: true })
+    }
     const workspaceId = props.currentWorkspace.id
     const fetchGetPublicationList = await props.dispatch(getPublicationPage(workspaceId, PUBLICATION_ITEM_COUNT_PER_PAGE, pageToken))
     switch (fetchGetPublicationList.status) {
@@ -346,7 +348,9 @@ export class Publications extends React.Component {
         props.dispatch(newFlashMessage(`${props.t('An error has happened while getting')} ${props.t('publication list')}`, 'warning'))
         break
     }
-    this.setState({ loading: false })
+    if (pageToken === '') {
+      this.setState({ loading: false })
+    }
   }
 
   getCommentList = async (publicationId, publicationContentType) => {
