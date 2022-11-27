@@ -3,10 +3,9 @@ import PropTypes from 'prop-types'
 import Radium from 'radium'
 import { IconButton } from 'tracim_frontend_lib'
 
-require('./ContentTypeBtn.styl')
-
-export const ContentTypeBtn = props =>
+export const DashboardButton = props =>
   <IconButton
+    customClass='dashboard__workspace__rightMenu__contents__button'
     text={props.creationLabel}
     icon={props.faIcon}
     title={props.creationLabel}
@@ -17,20 +16,18 @@ export const ContentTypeBtn = props =>
     mode='dark'
     dataCy={props.dataCy}
   />
-export default Radium(ContentTypeBtn)
+export default Radium(DashboardButton)
 
-ContentTypeBtn.propTypes = {
+DashboardButton.propTypes = {
   hexcolor: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
   faIcon: PropTypes.string.isRequired,
   creationLabel: PropTypes.string.isRequired,
   customClass: PropTypes.string,
   onClickBtn: PropTypes.func,
-  appSlug: PropTypes.string,
   dataCy: PropTypes.string
 }
 
-ContentTypeBtn.defaultProps = {
+DashboardButton.defaultProps = {
   customClass: '',
   dataCy: ''
 }

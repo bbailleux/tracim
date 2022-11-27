@@ -3,29 +3,30 @@ import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import {
-  TracimComponent,
-  TLM_ENTITY_TYPE as TLM_ET,
-  TLM_CORE_EVENT_TYPE as TLM_CET,
-  PageWrapper,
-  PageContent,
-  IconButton,
+  addExternalLinksIcons,
   BREADCRUMBS_TYPE,
+  buildHeadTitle,
   COLORS,
   CUSTOM_EVENT,
+  DropdownMenu,
+  IconButton,
+  PAGE,
+  PageContent,
+  PageWrapper,
+  PROFILE,
   ROLE,
   ROLE_LIST,
-  PROFILE,
-  buildHeadTitle,
-  PAGE,
   removeAtInUsername,
   SPACE_TYPE,
-  addExternalLinksIcons
+  TracimComponent,
+  TLM_CORE_EVENT_TYPE as TLM_CET,
+  TLM_ENTITY_TYPE as TLM_ET
 } from 'tracim_frontend_lib'
 import {
+  deleteWorkspaceMember,
   getMyselfKnownMember,
   getSubscriptions,
   postWorkspaceMember,
-  deleteWorkspaceMember,
   putMyselfWorkspaceDoNotify
 } from '../action-creator.async.js'
 import {
@@ -39,14 +40,12 @@ import {
   FETCH_CONFIG,
   findUserRoleIdInWorkspace
 } from '../util/helper.js'
+import DashboardButton from '../component/Dashboard/DashboardButton.jsx'
 import UserStatus from '../component/Dashboard/UserStatus.jsx'
-import ContentTypeBtn from '../component/Dashboard/ContentTypeBtn.jsx'
 import MemberList from '../component/Dashboard/MemberList.jsx'
 import TabBar from '../component/TabBar/TabBar.jsx'
 import WorkspaceRecentActivities from './WorkspaceRecentActivities.jsx'
 import { HACK_COLLABORA_CONTENT_TYPE } from './WorkspaceContent.jsx'
-
-const ALWAYS_ALLOWED_BUTTON_SLUGS = ['contents/all', 'agenda', 'gallery']
 
 export class Dashboard extends React.Component {
   constructor (props) {
@@ -381,7 +380,7 @@ export class Dashboard extends React.Component {
 
     // INFO - GB - 2019-08-29 - these filters are made temporarily by the frontend, but may change to have all the intelligence in the backend
     // https://github.com/tracim/tracim/issues/2326
-    let contentTypeButtonList = []
+    const contentTypeButtonList = []
     if (props.currentWorkspace.publicationEnabled) {
       contentTypeButtonList.push({
         slug: 'news',
@@ -392,56 +391,41 @@ export class Dashboard extends React.Component {
       })
     }
 
+    let agendaApp
+    let galleryApp
+
     // INFO - MP - 06-09-2022 - Build the application list buttons
-    contentTypeButtonList = contentTypeButtonList.concat(props.contentType.length > 0 // INFO - CH - 2019-04-03 - wait for content type api to have responded
-      ? props.appList
-        .filter(app => userRoleIdInWorkspace === ROLE.contributor.id ? app.slug !== 'contents/folder' : true)
-        .filter(app => app.slug === 'agenda' ? props.currentWorkspace.agendaEnabled : true)
-        .filter(app => app.slug !== 'contents/share_folder')
-        .filter(app => app.slug !== 'share_content')
-        .filter(app => app.slug !== 'upload_permission')
-        .filter(app => app.slug !== 'contents/todo')
-        .map(app => {
-          const contentType = props.contentType.find(ct => app.slug.includes(ct.slug)) || { creationLabel: '', slug: '' }
-          // INFO - CH - 2019-04-03 - hard coding some agenda properties for now since some end points requires some clarifications
-          // these endpoints are /system/applications, /system/content_types and key sidebar_entry from /user/me/workspaces
-          // HACK - CH - 2019-09-10 - hard coding collabora creation label from the hack since backend still isn't clear about appList and contentTypeList usage
-          // See https://github.com/tracim/tracim/issues/2375
-          // HACK - GM - 2019-11-26 - hard coding gallery creation label because gallery don't have a content_type
-          const creationLabelWithHACK = (() => {
-            switch (app.slug) {
-              case 'agenda': return props.t('Open the agenda')
-              case 'gallery': return props.t('Open the gallery')
-              case 'collaborative_document_edition': return HACK_COLLABORA_CONTENT_TYPE([{}]).creationLabel
-              default: return contentType.creationLabel
-            }
-          })()
-
-          // HACK - CH - 2019-09-10 - hard coding collabora slug from the hack since the collaborative_document has been removed from content type list
-          // See https://github.com/tracim/tracim/issues/2375
-          const slugWithHACK = app.slug === HACK_COLLABORA_CONTENT_TYPE([{}]).slug
-            ? HACK_COLLABORA_CONTENT_TYPE([{}]).slug
-            : contentType.slug
-
-          const route = (() => {
-            switch (app.slug) {
-              case 'agenda': return PAGE.WORKSPACE.AGENDA(props.currentWorkspace.id)
-              case 'gallery': return PAGE.WORKSPACE.GALLERY(props.currentWorkspace.id)
-              default: return `${PAGE.WORKSPACE.NEW(props.currentWorkspace.id, slugWithHACK)}?parent_id=null`
-            }
-          })()
-
-          return {
-            ...app,
-            hexcolor: app.slug === HACK_COLLABORA_CONTENT_TYPE([{}]).slug
-              ? HACK_COLLABORA_CONTENT_TYPE([{}]).hexcolor
-              : app.hexcolor,
-            creationLabel: creationLabelWithHACK,
-            route: route
+    if (props.contentType.length > 0) { // INFO - CH - 2019-04-03 - wait for content type api to have responded
+      props.appList.forEach(app => {
+        if (app.slug === 'agenda') agendaApp = app
+        else if (app.slug === 'gallery') galleryApp = app
+        else if (!(
+          (userRoleIdInWorkspace === ROLE.contributor.id && app.slug === 'contents/folder') ||
+          app.slug === 'contents/share_folder' ||
+          app.slug === 'share_content' ||
+          app.slug === 'upload_permission' ||
+          app.slug === 'contents/todo'
+        )) {
+          if (app.slug === 'collaborative_document_edition') {
+            // HACK - CH - 2019-09-10 - hard coding collabora from the hack since the collaborative_document has been removed from content type list
+            // See https://github.com/tracim/tracim/issues/2375
+            contentTypeButtonList.push({
+              ...app,
+              creationLabel: HACK_COLLABORA_CONTENT_TYPE([{}]).creationLabel,
+              hexcolor: HACK_COLLABORA_CONTENT_TYPE([{}]).hexcolor,
+              route: `${PAGE.WORKSPACE.NEW(props.currentWorkspace.id, HACK_COLLABORA_CONTENT_TYPE([{}]).slug)}?parent_id=null`
+            })
+          } else {
+            const contentType = props.contentType.find(ct => app.slug.includes(ct.slug)) || { creationLabel: '', slug: '' }
+            contentTypeButtonList.push({
+              ...app,
+              creationLabel: contentType.creationLabel,
+              route: `${PAGE.WORKSPACE.NEW(props.currentWorkspace.id, contentType.slug)}?parent_id=null`
+            })
           }
-        })
-      : []
-    )
+        }
+      })
+    }
 
     const description = addExternalLinksIcons(props.currentWorkspace.description.trim())
 
@@ -493,6 +477,7 @@ export class Dashboard extends React.Component {
 
                 <div className='dashboard__workspace__rightMenu__contents'>
                   <IconButton
+                    customClass='dashboard__workspace__rightMenu__contents__button'
                     icon='fas fa-fw fa-cog'
                     text={(userRoleIdInWorkspace >= ROLE.contentManager.id
                       ? props.t('Space settings')
@@ -500,24 +485,59 @@ export class Dashboard extends React.Component {
                     )}
                     onClick={this.handleClickOpenAdvancedDashboard}
                   />
+                  {userRoleIdInWorkspace >= ROLE.contributor.id && (
+                    <DropdownMenu
+                      buttonCustomClass='dashboard__workspace__rightMenu__contents__button'
+                      buttonIcon='fas fa-plus'
+                      buttonLabel={props.t('Create a content')}
+                      isButton
+                      menuCustomClass='dashboard__workspace__rightMenu__contents__menu'
+                    >
+                      {contentTypeButtonList.map(app => (
+                        <IconButton
+                          customClass='transparentButton'
+                          dataCy={`create_${app.slug}`}
+                          icon={app.faIcon}
+                          iconColor={app.hexcolor}
+                          intent='secondary'
+                          key={app.slug}
+                          mode='dark'
+                          onClick={() => props.history.push(app.route)}
+                          // TODO - Côme - 2018/09/12 - translation key below is a little hacky:
+                          // The creation label comes from api but since there is no translation in backend
+                          // every files has a 'externalTranslationList' array just to generate the translation key in the json files through i18n.scanner
+                          text={props.t(app.creationLabel)}
+                          textMobile={props.t(app.creationLabel)}
+                          title={props.t(app.creationLabel)}
+                        />
+                      )
+                      )}
+                    </DropdownMenu>
+                  )}
 
-                  {contentTypeButtonList.map(app => {
-                    return (userRoleIdInWorkspace >= ROLE.contributor.id || ALWAYS_ALLOWED_BUTTON_SLUGS.includes(app.slug)) && (
-                      <ContentTypeBtn
-                        hexcolor={app.hexcolor}
-                        label={app.label}
-                        faIcon={app.faIcon}
-                        // TODO - Côme - 2018/09/12 - translation key below is a little hacky:
-                        // The creation label comes from api but since there is no translation in backend
-                        // every files has a 'externalTranslationList' array just to generate the translation key in the json files through i18n.scanner
-                        creationLabel={props.t(app.creationLabel)}
-                        onClickBtn={() => props.history.push(app.route)}
-                        appSlug={app.slug}
-                        key={app.slug}
-                        dataCy={`create_${app.slug}`}
-                      />
-                    )
-                  })}
+                  {agendaApp && props.currentWorkspace.agendaEnabled && (
+                    <DashboardButton
+                      appSlug={agendaApp.slug}
+                      creationLabel={props.t('Open the agenda')}
+                      dataCy={`create_${agendaApp.slug}`}
+                      faIcon={agendaApp.faIcon}
+                      hexcolor={agendaApp.hexcolor}
+                      key={agendaApp.slug}
+                      onClickBtn={() => props.history.push(PAGE.WORKSPACE.AGENDA(props.currentWorkspace.id))}
+                    />
+                  )}
+
+                  {galleryApp && (
+                    <DashboardButton
+                      appSlug={galleryApp.slug}
+                      creationLabel={props.t('Open the gallery')}
+                      dataCy={`create_${galleryApp.slug}`}
+                      faIcon={galleryApp.faIcon}
+                      hexcolor={galleryApp.hexcolor}
+                      key={galleryApp.slug}
+                      onClickBtn={() => props.history.push(PAGE.WORKSPACE.GALLERY(props.currentWorkspace.id))}
+                    />
+                  )}
                 </div>
 
                 <MemberList
@@ -533,8 +553,6 @@ export class Dashboard extends React.Component {
                   isLoading={state.isMemberListLoading}
                   onChangePersonalData={this.handleChangePersonalData}
                   onClickKnownMember={this.handleClickKnownMember}
-                  // createAccount={state.newMember.createAccount}
-                  // onChangeCreateAccount={this.handleChangeNewMemberCreateAccount}
                   role={state.newMember.role}
                   onChangeRole={this.handleChangeNewMemberRole}
                   onClickValidateNewMember={this.handleClickValidateNewMember}
