@@ -521,7 +521,6 @@ export class Dashboard extends React.Component {
                       creationLabel={props.t('Open the agenda')}
                       dataCy={`create_${agendaApp.slug}`}
                       faIcon={agendaApp.faIcon}
-                      hexcolor={agendaApp.hexcolor}
                       key={agendaApp.slug}
                       onClickBtn={() => props.history.push(PAGE.WORKSPACE.AGENDA(props.currentWorkspace.id))}
                     />
@@ -533,7 +532,6 @@ export class Dashboard extends React.Component {
                       creationLabel={props.t('Open the gallery')}
                       dataCy={`create_${galleryApp.slug}`}
                       faIcon={galleryApp.faIcon}
-                      hexcolor={galleryApp.hexcolor}
                       key={galleryApp.slug}
                       onClickBtn={() => props.history.push(PAGE.WORKSPACE.GALLERY(props.currentWorkspace.id))}
                     />

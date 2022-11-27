@@ -10,7 +10,6 @@ export const DashboardButton = props =>
     icon={props.faIcon}
     title={props.creationLabel}
     type='button'
-    iconColor={props.hexcolor}
     onClick={props.onClickBtn}
     intent='secondary'
     mode='dark'
@@ -19,7 +18,6 @@ export const DashboardButton = props =>
 export default Radium(DashboardButton)
 
 DashboardButton.propTypes = {
-  hexcolor: PropTypes.string.isRequired,
   faIcon: PropTypes.string.isRequired,
   creationLabel: PropTypes.string.isRequired,
   customClass: PropTypes.string,
