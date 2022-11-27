@@ -355,50 +355,48 @@ export class Favorites extends React.Component {
     const filteredFavoriteList = this.filterFavoriteList()
 
     return (
-      <div className='tracim__content-scrollview'>
-        <PageWrapper customClass='favorites__wrapper'>
-          <PageTitle
-            title={props.t('My favorites')}
-            icon='far fa-star'
-            breadcrumbsList={props.breadcrumbs}
-            isEmailNotifActivated={props.system.config.email_notification_activated}
-          />
+      <PageWrapper customClass='favorites__wrapper'>
+        <PageTitle
+          title={props.t('My favorites')}
+          icon='far fa-star'
+          breadcrumbsList={props.breadcrumbs}
+          isEmailNotifActivated={props.system.config.email_notification_activated}
+        />
 
-          {state.isLoading
-            ? <Loading />
-            : (
-              <PageContent>
-                <FilterBar
-                  onChange={e => {
-                    const newFilter = e.target.value
-                    this.setState({ userFilter: newFilter })
-                  }}
-                  value={state.userFilter}
-                  placeholder={props.t('Filter my favorites')}
-                />
+        {state.isLoading
+          ? <Loading />
+          : (
+            <PageContent>
+              <FilterBar
+                onChange={e => {
+                  const newFilter = e.target.value
+                  this.setState({ userFilter: newFilter })
+                }}
+                value={state.userFilter}
+                placeholder={props.t('Filter my favorites')}
+              />
 
-                {filteredFavoriteList.length > 0
-                  ? (
-                    <>
-                      <FavoritesHeader
-                        onClickTitle={this.handleClickTitleToSort}
-                        isOrderAscending={state.sortOrder === SORT_ORDER.ASCENDING}
-                        selectedSortCriterion={state.selectedSortCriterion}
-                      />
-                      {filteredFavoriteList.map((favorite, index) => this.getFavoriteComponent(favorite, index))}
-                    </>
-                  )
-                  : (
-                    <EmptyListMessage>
-                      {props.favoriteList.length <= 0
-                        ? props.t('You did not add any content as favorite yet.')
-                        : props.t('There are no favorites that matches you filter')}
-                    </EmptyListMessage>
-                  )}
-              </PageContent>
-            )}
-        </PageWrapper>
-      </div>
+              {filteredFavoriteList.length > 0
+                ? (
+                  <>
+                    <FavoritesHeader
+                      onClickTitle={this.handleClickTitleToSort}
+                      isOrderAscending={state.sortOrder === SORT_ORDER.ASCENDING}
+                      selectedSortCriterion={state.selectedSortCriterion}
+                    />
+                    {filteredFavoriteList.map((favorite, index) => this.getFavoriteComponent(favorite, index))}
+                  </>
+                )
+                : (
+                  <EmptyListMessage>
+                    {props.favoriteList.length <= 0
+                      ? props.t('You did not add any content as favorite yet.')
+                      : props.t('There are no favorites that matches you filter')}
+                  </EmptyListMessage>
+                )}
+            </PageContent>
+          )}
+      </PageWrapper>
     )
   }
 }

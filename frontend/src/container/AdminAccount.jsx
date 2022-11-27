@@ -365,78 +365,76 @@ export class Account extends React.Component {
 
     return (
       <div className='tracim__content fullWidthFullHeight'>
-        <div className='tracim__content-scrollview'>
-          <PageWrapper customClass='account'>
-            <PageTitle
-              parentClass='account'
-              title={this.setTitle()}
-              icon='user-o'
-              breadcrumbsList={props.breadcrumbs}
-              isEmailNotifActivated={props.system.config.email_notification_activated}
-            />
+        <PageWrapper customClass='account'>
+          <PageTitle
+            parentClass='account'
+            title={this.setTitle()}
+            icon='user-o'
+            breadcrumbsList={props.breadcrumbs}
+            isEmailNotifActivated={props.system.config.email_notification_activated}
+          />
 
-            <PageContent parentClass='account'>
-              <UserInfo user={state.userToEdit} profileButtonText={props.t('Profile')} />
+          <PageContent parentClass='account'>
+            <UserInfo user={state.userToEdit} profileButtonText={props.t('Profile')} />
 
-              <Delimiter customClass='account__delimiter' />
+            <Delimiter customClass='account__delimiter' />
 
-              <div className='account__userpreference'>
-                <MenuSubComponent
-                  menu={state.subComponentMenu}
-                  onClickMenuItem={this.handleClickSubComponentMenuItem}
-                />
+            <div className='account__userpreference'>
+              <MenuSubComponent
+                menu={state.subComponentMenu}
+                onClickMenuItem={this.handleClickSubComponentMenuItem}
+              />
 
-                <div className='account__userpreference__setting'>
-                  {(() => {
-                    switch (state.subComponentMenu.find(({ active }) => active).name) {
-                      case 'personalData':
-                        return (
-                          <PersonalData
-                            userEmail={state.userToEdit.email}
-                            userUsername={state.userToEdit.username}
-                            userPublicName={state.userToEdit.publicName}
-                            userAuthType={state.userToEdit.authType}
-                            onClickSubmit={this.handleSubmitPersonalData}
-                            onChangeUsername={this.handleChangeUsername}
-                            isUsernameValid={state.userToEdit.isUsernameValid}
-                            usernameInvalidMsg={state.userToEdit.usernameInvalidMsg}
-                            displayAdminInfo
-                          />
-                        )
+              <div className='account__userpreference__setting'>
+                {(() => {
+                  switch (state.subComponentMenu.find(({ active }) => active).name) {
+                    case 'personalData':
+                      return (
+                        <PersonalData
+                          userEmail={state.userToEdit.email}
+                          userUsername={state.userToEdit.username}
+                          userPublicName={state.userToEdit.publicName}
+                          userAuthType={state.userToEdit.authType}
+                          onClickSubmit={this.handleSubmitPersonalData}
+                          onChangeUsername={this.handleChangeUsername}
+                          isUsernameValid={state.userToEdit.isUsernameValid}
+                          usernameInvalidMsg={state.userToEdit.usernameInvalidMsg}
+                          displayAdminInfo
+                        />
+                      )
 
-                      case 'spacesConfig':
-                        return (
-                          <UserSpacesConfig
-                            userToEditId={Number(state.userToEditId)}
-                            userEmail={state.userToEdit.email}
-                            userPublicName={state.userToEdit.publicName}
-                            userUsername={state.userToEdit.username}
-                            onChangeSubscriptionNotif={this.handleChangeSubscriptionNotif}
-                            openSpacesManagement={props.openSpacesManagement}
-                            admin
-                          />
-                        )
+                    case 'spacesConfig':
+                      return (
+                        <UserSpacesConfig
+                          userToEditId={Number(state.userToEditId)}
+                          userEmail={state.userToEdit.email}
+                          userPublicName={state.userToEdit.publicName}
+                          userUsername={state.userToEdit.username}
+                          onChangeSubscriptionNotif={this.handleChangeSubscriptionNotif}
+                          openSpacesManagement={props.openSpacesManagement}
+                          admin
+                        />
+                      )
 
-                      case 'password':
-                        return <Password onClickSubmit={this.handleSubmitPassword} displayAdminInfo />
+                    case 'password':
+                      return <Password onClickSubmit={this.handleSubmitPassword} displayAdminInfo />
 
-                      case 'agenda':
-                        return (
-                          <AgendaInfo
-                            customClass='account__agenda'
-                            introText={props.t('Use this link to integrate this agenda to your')}
-                            caldavText={props.t('CalDAV compatible software')}
-                            agendaUrl={state.userToEdit.agendaUrl}
-                          />
-                        )
-                    }
-                  })()}
-                </div>
+                    case 'agenda':
+                      return (
+                        <AgendaInfo
+                          customClass='account__agenda'
+                          introText={props.t('Use this link to integrate this agenda to your')}
+                          caldavText={props.t('CalDAV compatible software')}
+                          agendaUrl={state.userToEdit.agendaUrl}
+                        />
+                      )
+                  }
+                })()}
               </div>
+            </div>
 
-            </PageContent>
-          </PageWrapper>
-        </div>
+          </PageContent>
+        </PageWrapper>
       </div>
     )
   }

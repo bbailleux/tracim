@@ -228,65 +228,63 @@ export class JoinWorkspace extends React.Component {
     const parser = new DOMParser()
     return (
       <div className='tracim__content fullWidthFullHeight'>
-        <div className='tracim__content-scrollview'>
-          <PageWrapper customClass={`${className}__wrapper`}>
-            <PageTitle
-              parentClass={className}
-              title={props.t('Join a space')}
-              icon='fas fa-users'
-              breadcrumbsList={props.breadcrumbs}
-              isEmailNotifActivated={props.system.config.email_notification_activated}
+        <PageWrapper customClass={`${className}__wrapper`}>
+          <PageTitle
+            parentClass={className}
+            title={props.t('Join a space')}
+            icon='fas fa-users'
+            breadcrumbsList={props.breadcrumbs}
+            isEmailNotifActivated={props.system.config.email_notification_activated}
+          />
+
+          <PageContent parentClass={`${className}__content`}>
+
+            <FilterBar
+              onChange={e => this.handleWorkspaceFilter(e.target.value)}
+              icon='search'
+              value={state.filter}
+              placeholder={props.t('Filter spaces')}
             />
 
-            <PageContent parentClass={`${className}__content`}>
-
-              <FilterBar
-                onChange={e => this.handleWorkspaceFilter(e.target.value)}
-                icon='search'
-                value={state.filter}
-                placeholder={props.t('Filter spaces')}
-              />
-
-              <div className={`${className}__content__workspaceList`} data-cy='joinWorkspaceWorkspaceList'>
-                <div className={`${className}__content__workspaceList__item`}>
-                  <TitleListHeader
-                    title={props.t('Type')}
-                    onClickTitle={() => this.handleClickTitleToSort(SORT_BY.SPACE_TYPE)}
-                    isOrderAscending={state.sortOrder === SORT_ORDER.ASCENDING}
-                    isSelected={state.selectedSortCriterion === SORT_BY.SPACE_TYPE}
-                    tootltip={props.t('Sort by type')}
-                  />
-                  <TitleListHeader
-                    title={props.t('Title and description')}
-                    onClickTitle={() => this.handleClickTitleToSort(SORT_BY.LABEL)}
-                    isOrderAscending={state.sortOrder === SORT_ORDER.ASCENDING}
-                    isSelected={state.selectedSortCriterion === SORT_BY.LABEL}
-                    tootltip={props.t('Sort by title')}
-                  />
-                </div>
-
-                {state.displayedFavoritesList.filter(this.filterWorkspaces.bind(this)).map((workspace) => {
-                  const descriptionText = htmlToText(parser, workspace.description)
-                  return (
-                    <div key={workspace.id} className={`${className}__content__workspaceList__item`}>
-                      {this.createIconForAccessType(workspace.accessType)}
-                      <div className={`${className}__content__workspaceList__item__title_description`}>
-                        <span>{workspace.label}</span>
-                        <span
-                          className={`${className}__content__workspaceList__item__description`}
-                          title={descriptionText}
-                        >
-                          {descriptionText}
-                        </span>
-                      </div>
-                      {this.createRequestComponent(workspace)}
-                    </div>
-                  )
-                })}
+            <div className={`${className}__content__workspaceList`} data-cy='joinWorkspaceWorkspaceList'>
+              <div className={`${className}__content__workspaceList__item`}>
+                <TitleListHeader
+                  title={props.t('Type')}
+                  onClickTitle={() => this.handleClickTitleToSort(SORT_BY.SPACE_TYPE)}
+                  isOrderAscending={state.sortOrder === SORT_ORDER.ASCENDING}
+                  isSelected={state.selectedSortCriterion === SORT_BY.SPACE_TYPE}
+                  tootltip={props.t('Sort by type')}
+                />
+                <TitleListHeader
+                  title={props.t('Title and description')}
+                  onClickTitle={() => this.handleClickTitleToSort(SORT_BY.LABEL)}
+                  isOrderAscending={state.sortOrder === SORT_ORDER.ASCENDING}
+                  isSelected={state.selectedSortCriterion === SORT_BY.LABEL}
+                  tootltip={props.t('Sort by title')}
+                />
               </div>
-            </PageContent>
-          </PageWrapper>
-        </div>
+
+              {state.displayedFavoritesList.filter(this.filterWorkspaces.bind(this)).map((workspace) => {
+                const descriptionText = htmlToText(parser, workspace.description)
+                return (
+                  <div key={workspace.id} className={`${className}__content__workspaceList__item`}>
+                    {this.createIconForAccessType(workspace.accessType)}
+                    <div className={`${className}__content__workspaceList__item__title_description`}>
+                      <span>{workspace.label}</span>
+                      <span
+                        className={`${className}__content__workspaceList__item__description`}
+                        title={descriptionText}
+                      >
+                        {descriptionText}
+                      </span>
+                    </div>
+                    {this.createRequestComponent(workspace)}
+                  </div>
+                )
+              })}
+            </div>
+          </PageContent>
+        </PageWrapper>
       </div>
     )
   }

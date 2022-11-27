@@ -21,7 +21,9 @@
     justify-content center
     background-image url('../img/default_cover_image.png')
     background-repeat repeat
-    position relative
+    position sticky
+    top -80px
+    z-index 1
     &__changeBtn
       position absolute
       bottom standardSpacing
@@ -40,6 +42,9 @@
     padding-inline-start pageSpacing
     background-color offWhite
     display flex
+    position sticky
+    top 20px
+    z-index 1
     &__btnGrp
       display flex
       flex-direction row

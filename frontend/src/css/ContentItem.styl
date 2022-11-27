@@ -8,12 +8,13 @@ createInFolderButtonWidth = 74px
   background-color offWhite
   border-radius standardBorderRadius
   margin-top spacingBetweenListItem
+  height listItemHeight
   &.item-last
     margin-bottom standardSpacing
 
 .content
   &__item
-    padding standardSpacing 0
+    padding textSpacing 0
     display flex
   &__type
     flex 1
@@ -53,6 +54,8 @@ createInFolderButtonWidth = 74px
   &__actions
     flex 1
     margin-inline-start createInFolderButtonWidth
+    margin-top auto
+    margin-bottom auto
 
 @media (max-width: max-md)
   .content

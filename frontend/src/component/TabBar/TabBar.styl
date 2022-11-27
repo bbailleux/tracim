@@ -5,6 +5,9 @@ tabWidth = 170 // 170px
 .tabBar
   display flex
   background-color offWhite
+  position sticky
+  top 0
+  z-index 3
   &__tabs
     display flex
     flex-basis content
@@ -54,6 +57,7 @@ tabWidth = 170 // 170px
     &__label
       display none
   .tabBar
+    position relative
     .breadcrumbs
       display none
 

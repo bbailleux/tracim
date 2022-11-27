@@ -447,111 +447,112 @@ export class Dashboard extends React.Component {
 
     return (
       <div className='tracim__content fullWidthFullHeight'>
-        <div className='tracim__content-scrollview'>
-          <PageWrapper customClass='dashboard'>
-            <TabBar
-              currentSpace={props.currentWorkspace}
-              breadcrumbs={props.breadcrumbs}
-              isEmailNotifActivated={props.system.config.email_notification_activated}
-            />
+        <PageWrapper customClass='dashboard'>
+          <TabBar
+            currentSpace={props.currentWorkspace}
+            breadcrumbs={props.breadcrumbs}
+            isEmailNotifActivated={props.system.config.email_notification_activated}
+          />
 
-            <PageContent>
-              <div className='dashboard__workspace'>
-                <div className='dashboard__workspace__content'>
-                  <div className='dashboard__workspace__detail'>
-                    {(description
-                      ? (
-                        <div
-                          className='dashboard__workspace__detail__description'
-                          dangerouslySetInnerHTML={{ __html: description }}
-                        />
-                      )
-                      : (
-                        <div className='dashboard__workspace__detail__description__missing'>
-                          {props.t("This space doesn't have a description yet.")}
-                        </div>
-                      )
-                    )}
-                  </div>
-                  {props.currentWorkspace && props.currentWorkspace.id && <WorkspaceRecentActivities workspaceId={props.currentWorkspace.id} />}
+          <PageContent>
+            <div className='dashboard__workspace'>
+              <div className='dashboard__workspace__content'>
+                <div className='dashboard__workspace__detail'>
+                  {(description
+                    ? (
+                      <div
+                        className='dashboard__workspace__detail__description'
+                        dangerouslySetInnerHTML={{ __html: description }}
+                      />
+                    )
+                    : (
+                      <div className='dashboard__workspace__detail__description__missing'>
+                        {props.t("This space doesn't have a description yet.")}
+                      </div>
+                    )
+                  )}
                 </div>
-
-                <div className='dashboard__workspace__rightMenu'>
-                  <UserStatus
-                    user={props.user}
-                    currentWorkspace={props.currentWorkspace}
-                    displayNotifBtn={props.system.config.email_notification_activated}
-                    displaySubscriptionRequestsInformation={
-                      userRoleIdInWorkspace >= ROLE.workspaceManager.id &&
-                      props.currentWorkspace.accessType === SPACE_TYPE.onRequest.slug
-                    }
-                    newSubscriptionRequestsNumber={state.newSubscriptionRequestsNumber}
-                    onClickToggleNotifBtn={this.handleToggleNotifBtn}
-                    onClickAddNotify={this.handleClickAddNotification}
-                    onClickRemoveNotify={this.handleClickRemoveNotification}
-                    t={props.t}
-                  />
-
-                  <div className='dashboard__workspace__rightMenu__contents'>
-                    <IconButton
-                      icon='fas fa-fw fa-cog'
-                      text={props.t('Space settings')}
-                      onClick={this.handleClickOpenAdvancedDashboard}
-                    />
-
-                    {contentTypeButtonList.map(app => {
-                      return (userRoleIdInWorkspace >= ROLE.contributor.id || ALWAYS_ALLOWED_BUTTON_SLUGS.includes(app.slug)) && (
-                        <ContentTypeBtn
-                          hexcolor={app.hexcolor}
-                          label={app.label}
-                          faIcon={app.faIcon}
-                          // TODO - Côme - 2018/09/12 - translation key below is a little hacky:
-                          // The creation label comes from api but since there is no translation in backend
-                          // every files has a 'externalTranslationList' array just to generate the translation key in the json files through i18n.scanner
-                          creationLabel={props.t(app.creationLabel)}
-                          onClickBtn={() => props.history.push(app.route)}
-                          appSlug={app.slug}
-                          key={app.slug}
-                          dataCy={`create_${app.slug}`}
-                        />
-                      )
-                    })}
-                  </div>
-
-                  <MemberList
-                    customClass='dashboard__memberlist'
-                    loggedUser={props.user}
-                    apiUrl={FETCH_CONFIG.apiUrl}
-                    memberList={props.currentWorkspace.memberList}
-                    roleList={ROLE_LIST}
-                    searchedKnownMemberList={state.searchedKnownMemberList}
-                    autoCompleteFormNewMemberActive={state.autoCompleteFormNewMemberActive}
-                    publicName={state.newMember.publicName}
-                    isEmail={state.newMember.isEmail}
-                    isLoading={state.isMemberListLoading}
-                    onChangePersonalData={this.handleChangePersonalData}
-                    onClickKnownMember={this.handleClickKnownMember}
-                    // createAccount={state.newMember.createAccount}
-                    // onChangeCreateAccount={this.handleChangeNewMemberCreateAccount}
-                    role={state.newMember.role}
-                    onChangeRole={this.handleChangeNewMemberRole}
-                    onClickValidateNewMember={this.handleClickValidateNewMember}
-                    displayNewMemberForm={state.displayNewMemberForm}
-                    onClickAddMemberBtn={this.handleClickAddMemberBtn}
-                    onClickCloseAddMemberBtn={this.handleClickCloseAddMemberBtn}
-                    onClickRemoveMember={this.handleClickRemoveMember}
-                    userRoleIdInWorkspace={userRoleIdInWorkspace}
-                    canSendInviteNewUser={[PROFILE.administrator.slug, PROFILE.manager.slug].includes(props.user.profile)}
-                    isEmailNotifActivated={props.system.config.email_notification_activated}
-                    autoCompleteClicked={state.autoCompleteClicked}
-                    onClickAutoComplete={this.handleClickAutoComplete}
-                    t={props.t}
-                  />
-                </div>
+                {props.currentWorkspace && props.currentWorkspace.id && <WorkspaceRecentActivities workspaceId={props.currentWorkspace.id} />}
               </div>
-            </PageContent>
-          </PageWrapper>
-        </div>
+
+              <div className='dashboard__workspace__rightMenu'>
+                <UserStatus
+                  user={props.user}
+                  currentWorkspace={props.currentWorkspace}
+                  displayNotifBtn={props.system.config.email_notification_activated}
+                  displaySubscriptionRequestsInformation={
+                    userRoleIdInWorkspace >= ROLE.workspaceManager.id &&
+                    props.currentWorkspace.accessType === SPACE_TYPE.onRequest.slug
+                  }
+                  newSubscriptionRequestsNumber={state.newSubscriptionRequestsNumber}
+                  onClickToggleNotifBtn={this.handleToggleNotifBtn}
+                  onClickAddNotify={this.handleClickAddNotification}
+                  onClickRemoveNotify={this.handleClickRemoveNotification}
+                  t={props.t}
+                />
+
+                <div className='dashboard__workspace__rightMenu__contents'>
+                  <IconButton
+                    icon='fas fa-fw fa-cog'
+                    text={(userRoleIdInWorkspace >= ROLE.contentManager.id
+                      ? props.t('Space settings')
+                      : props.t('Space information')
+                    )}
+                    onClick={this.handleClickOpenAdvancedDashboard}
+                  />
+
+                  {contentTypeButtonList.map(app => {
+                    return (userRoleIdInWorkspace >= ROLE.contributor.id || ALWAYS_ALLOWED_BUTTON_SLUGS.includes(app.slug)) && (
+                      <ContentTypeBtn
+                        hexcolor={app.hexcolor}
+                        label={app.label}
+                        faIcon={app.faIcon}
+                        // TODO - Côme - 2018/09/12 - translation key below is a little hacky:
+                        // The creation label comes from api but since there is no translation in backend
+                        // every files has a 'externalTranslationList' array just to generate the translation key in the json files through i18n.scanner
+                        creationLabel={props.t(app.creationLabel)}
+                        onClickBtn={() => props.history.push(app.route)}
+                        appSlug={app.slug}
+                        key={app.slug}
+                        dataCy={`create_${app.slug}`}
+                      />
+                    )
+                  })}
+                </div>
+
+                <MemberList
+                  customClass='dashboard__memberlist'
+                  loggedUser={props.user}
+                  apiUrl={FETCH_CONFIG.apiUrl}
+                  memberList={props.currentWorkspace.memberList}
+                  roleList={ROLE_LIST}
+                  searchedKnownMemberList={state.searchedKnownMemberList}
+                  autoCompleteFormNewMemberActive={state.autoCompleteFormNewMemberActive}
+                  publicName={state.newMember.publicName}
+                  isEmail={state.newMember.isEmail}
+                  isLoading={state.isMemberListLoading}
+                  onChangePersonalData={this.handleChangePersonalData}
+                  onClickKnownMember={this.handleClickKnownMember}
+                  // createAccount={state.newMember.createAccount}
+                  // onChangeCreateAccount={this.handleChangeNewMemberCreateAccount}
+                  role={state.newMember.role}
+                  onChangeRole={this.handleChangeNewMemberRole}
+                  onClickValidateNewMember={this.handleClickValidateNewMember}
+                  displayNewMemberForm={state.displayNewMemberForm}
+                  onClickAddMemberBtn={this.handleClickAddMemberBtn}
+                  onClickCloseAddMemberBtn={this.handleClickCloseAddMemberBtn}
+                  onClickRemoveMember={this.handleClickRemoveMember}
+                  userRoleIdInWorkspace={userRoleIdInWorkspace}
+                  canSendInviteNewUser={[PROFILE.administrator.slug, PROFILE.manager.slug].includes(props.user.profile)}
+                  isEmailNotifActivated={props.system.config.email_notification_activated}
+                  autoCompleteClicked={state.autoCompleteClicked}
+                  onClickAutoComplete={this.handleClickAutoComplete}
+                  t={props.t}
+                />
+              </div>
+            </div>
+          </PageContent>
+        </PageWrapper>
       </div>
     )
   }

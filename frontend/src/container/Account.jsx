@@ -283,84 +283,82 @@ export class Account extends React.Component {
 
     return (
       <div className='tracim__content fullWidthFullHeight'>
-        <div className='tracim__content-scrollview'>
-          <PageWrapper customClass='account'>
-            <PageTitle
-              parentClass='account'
-              title={props.t('Account Settings')}
-              icon='fas fa-cogs'
-              breadcrumbsList={props.breadcrumbs}
-              isEmailNotifActivated={props.system.config.email_notification_activated}
-            />
+        <PageWrapper customClass='account'>
+          <PageTitle
+            parentClass='account'
+            title={props.t('Account Settings')}
+            icon='fas fa-cogs'
+            breadcrumbsList={props.breadcrumbs}
+            isEmailNotifActivated={props.system.config.email_notification_activated}
+          />
 
-            <PageContent parentClass='account'>
-              <UserInfo user={props.user} profileButtonText={props.t('My profile')} />
+          <PageContent parentClass='account'>
+            <UserInfo user={props.user} profileButtonText={props.t('My profile')} />
 
-              <Delimiter customClass='account__delimiter' />
+            <Delimiter customClass='account__delimiter' />
 
-              <div className='account__userpreference'>
-                <MenuSubComponent
-                  menu={state.subComponentMenu}
-                  onClickMenuItem={this.handleClickSubComponentMenuItem}
-                />
+            <div className='account__userpreference'>
+              <MenuSubComponent
+                menu={state.subComponentMenu}
+                onClickMenuItem={this.handleClickSubComponentMenuItem}
+              />
 
-                <div className='account__userpreference__setting'>
-                  {(() => {
-                    switch (state.subComponentMenu.find(({ active }) => active).name) {
-                      case 'personalData':
-                        return (
-                          <PersonalData
-                            langList={props.lang}
-                            userEmail={props.user.email}
-                            userUsername={props.user.username}
-                            userPublicName={props.user.publicName}
-                            userAuthType={props.user.authType}
-                            onClickSubmit={this.handleSubmitPersonalData}
-                            onChangeUsername={this.handleChangeUsername}
-                            isUsernameValid={state.isUsernameValid}
-                            usernameInvalidMsg={state.usernameInvalidMsg}
-                          />
-                        )
+              <div className='account__userpreference__setting'>
+                {(() => {
+                  switch (state.subComponentMenu.find(({ active }) => active).name) {
+                    case 'personalData':
+                      return (
+                        <PersonalData
+                          langList={props.lang}
+                          userEmail={props.user.email}
+                          userUsername={props.user.username}
+                          userPublicName={props.user.publicName}
+                          userAuthType={props.user.authType}
+                          onClickSubmit={this.handleSubmitPersonalData}
+                          onChangeUsername={this.handleChangeUsername}
+                          isUsernameValid={state.isUsernameValid}
+                          usernameInvalidMsg={state.usernameInvalidMsg}
+                        />
+                      )
 
-                      case 'spacesConfig':
-                        return (
-                          <UserSpacesConfig
-                            userToEditId={props.user.userId}
-                            onChangeSubscriptionNotif={this.handleChangeSubscriptionNotif}
-                            admin={false}
-                          />
-                        )
+                    case 'spacesConfig':
+                      return (
+                        <UserSpacesConfig
+                          userToEditId={props.user.userId}
+                          onChangeSubscriptionNotif={this.handleChangeSubscriptionNotif}
+                          admin={false}
+                        />
+                      )
 
-                      case 'password':
-                        return <Password onClickSubmit={this.handleSubmitPassword} />
+                    case 'password':
+                      return <Password onClickSubmit={this.handleSubmitPassword} />
 
-                      case 'configurationLinks':
-                        return (
-                          <div>
-                            {props.appList.some(a => a.slug === 'agenda') && (
-                              <AgendaInfo
-                                introText={props.t('Use this link to integrate this agenda to your')}
-                                caldavText={props.t('CalDAV compatible software')}
-                                agendaUrl={props.user.agendaUrl}
-                              />
-                            )}
-                            {props.system.config.webdav_enabled && (
-                              <WebdavInfo
-                                introText={props.t('Use this link to integrate Tracim in your file explorer')}
-                                webdavText={props.t('(protocole WebDAV)')}
-                                webdavUrl={props.system.config.webdav_url}
-                              />
-                            )}
-                          </div>
-                        )
-                    }
-                  })()}
-                </div>
+                    case 'configurationLinks':
+                      return (
+                        <div>
+                          {props.appList.some(a => a.slug === 'agenda') && (
+                            <AgendaInfo
+                              introText={props.t('Use this link to integrate this agenda to your')}
+                              caldavText={props.t('CalDAV compatible software')}
+                              agendaUrl={props.user.agendaUrl}
+                            />
+                          )}
+                          {props.system.config.webdav_enabled && (
+                            <WebdavInfo
+                              introText={props.t('Use this link to integrate Tracim in your file explorer')}
+                              webdavText={props.t('(protocole WebDAV)')}
+                              webdavUrl={props.system.config.webdav_url}
+                            />
+                          )}
+                        </div>
+                      )
+                  }
+                })()}
               </div>
+            </div>
 
-            </PageContent>
-          </PageWrapper>
-        </div>
+          </PageContent>
+        </PageWrapper>
       </div>
     )
   }
