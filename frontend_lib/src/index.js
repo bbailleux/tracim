@@ -8,7 +8,6 @@ import {
   handleFetchResult,
   displayDistanceDate,
   convertBackslashNToBr,
-  naturalCompareLabels,
   revisionTypeList,
   generateRandomPassword,
   getCurrentContentVersionNumber,
@@ -39,7 +38,6 @@ import {
   CONTENT_TYPE,
   CONTENT_NAMESPACE,
   buildTracimLiveMessageEventType,
-  sortTimelineByDate,
   removeAtInUsername,
   setupCommonRequestHeaders,
   serialize,
@@ -52,7 +50,6 @@ import {
   checkUsernameValidity,
   formatAbsoluteDate,
   permissiveNumberEqual,
-  sortWorkspaceList,
   updateTLMUser,
   scrollIntoViewIfNeeded,
   darkenColor,
@@ -66,13 +63,20 @@ import {
   htmlToText,
   tinymceRemove,
   addExternalLinksIcons,
-  sortContentByCreatedDateAndID,
-  sortContentByStatus,
   USER_CALL_STATE,
   STATUSES,
   TIMELINE_TYPE,
-  sortMemberList
+  stringIncludes
 } from './helper.js'
+
+import {
+  putFoldersAtListBeginning,
+  sortListBy,
+  sortListByMultipleCriteria,
+  SORT_BY,
+  SORT_ORDER,
+  sortTimelineByDate
+} from './sortListHelper.js'
 
 import {
   GROUP_MENTION_TRANSLATION_LIST,
@@ -111,6 +115,7 @@ import { defaultDebug } from './debug.js'
 import AgendaInfo from './component/AgendaInfo/AgendaInfo.jsx'
 import { Breadcrumbs } from './component/Breadcrumbs/Breadcrumbs.jsx'
 import EmptyListMessage from './component/EmptyListMessage/EmptyListMessage.jsx'
+import TitleListHeader from './component/Lists/ListHeader/TitleListHeader.jsx'
 
 import PopinFixed from './component/PopinFixed/PopinFixed.jsx'
 import PopinFixedHeader from './component/PopinFixed/PopinFixedHeader.jsx'
@@ -182,6 +187,7 @@ import UserInfo from './component/UserInfo/UserInfo.jsx'
 import TextInput from './component/Input/TextInput.jsx'
 import DistanceDate from './component/DistanceDate.jsx'
 import Icon from './component/Icon/Icon.jsx'
+import FilterBar from './component/FilterBar/FilterBar.jsx'
 
 import PopupUploadFile from './container/PopupUploadFile.jsx'
 import PopupProgressUpload from './container/PopupProgressUpload.jsx'
@@ -219,7 +225,7 @@ import {
   getReservedUsernames,
   getSpaceMemberFromId,
   getWorkspaceDetail,
-  getWorkspaceMemberList,
+  getSpaceMemberList,
   deleteWorkspace,
   getContentTypeList,
   putUserConfiguration,
@@ -323,9 +329,7 @@ export {
   getContentPath,
   handleInvalidMentionInComment,
   handleLinksBeforeSave,
-  naturalCompareLabels,
   ScrollToBottomWrapper,
-  sortWorkspaceList,
   TracimComponent,
   addAllResourceI18n,
   handleFetchResult,
@@ -434,7 +438,7 @@ export {
   getUsernameAvailability,
   getReservedUsernames,
   getWorkspaceDetail,
-  getWorkspaceMemberList,
+  getSpaceMemberList,
   deleteWorkspace,
   getContentTypeList,
   putUserConfiguration,
@@ -494,13 +498,18 @@ export {
   Popover,
   getBrowserLang,
   NewToDo,
+  putFoldersAtListBeginning,
   putToDo,
-  sortContentByCreatedDateAndID,
-  sortContentByStatus,
+  sortListBy,
+  sortListByMultipleCriteria,
+  SORT_BY,
+  SORT_ORDER,
   TimedEvent,
+  TitleListHeader,
   ToDoItem,
   ToDoManagement,
   STATUSES,
   TIMELINE_TYPE,
-  sortMemberList
+  stringIncludes,
+  FilterBar
 }

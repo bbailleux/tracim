@@ -6,19 +6,22 @@
   display flex
   flex-direction column
   color darkGrey2
-  &__top.btn
-    padding 0
-    margin 0
-    font-size metadataFontSize
-    color darkGrey2
-    &::after
-      display none
-    &:hover
-      text-decoration underline
-      color fontColor
+  &__top
+    &.btn
+      padding 0
+      margin 0
+      font-size metadataFontSize
+      color darkGrey2
+      &::after
+        display none
+      &:hover
+        text-decoration underline
+        color fontColor
     &Contents
       text-overflow ellipsis
       overflow hidden
+      & > span
+        color fontColor
   &__bottom
     overflow hidden
     display flex

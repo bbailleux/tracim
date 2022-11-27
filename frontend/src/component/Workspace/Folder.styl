@@ -53,19 +53,26 @@ folderopen()
     &__dragPreview
       display flex
       align-items center
-      flex 1
+      flex 11
       width 0 // INFO - CH - 2019-06-06 - this allows the text-overflow ellipsis
+    &__lastModification
+      flex 4
+      white-space nowrap
+      overflow hidden
+      text-overflow ellipsis
+      margin-inline-end standardSpacing
+      color fontColor
+      padding textSpacing
     &__icon
-      flex-grow 0
+      flex 1
       padding 0 standardSpacing
       font-size bigIconSize
       color offBlack
-      text-align center
     &__name
       display flex
       overflow hidden
       align-items center
-      flex 1
+      flex 11
       white-space nowrap
       span
         flex 1
@@ -79,8 +86,10 @@ folderopen()
         font-weight normal
     &__content
       position relative
-    &__button
-      flex-grow 0
+    &__button, .shareFolder__header__button
+      flex 2
+      display flex
+      justify-content flex-end
       &__advancedbtn
         position relative
       &__addbtn
@@ -93,18 +102,14 @@ folderopen()
           margin-inline-end standardSpacing
           &::after
             margin-inline-start 20px
-          &-desktop
-            display inline
-          &-responsive
-            display none
-            &__iconplus.fas.fa-plus
-              margin 0
       .addbtn__subdropdown
         padding 0
     &__status
-      flex-grow 0
-      padding 0 standardSpacing
+      flex 2
+      padding 0 textSpacing
       width 140px
+.folder__header div.shareFolder__header__button
+  flex 6
 
 @media (min-width: min-sm) and (max-width: max-sm)
   .folder
@@ -117,14 +122,14 @@ folderopen()
 @media (max-width: max-xs)
   .folder
     &__header
-      &__button__addbtn__text
-        margin-inline-end standardSpacing
       &__status
         display none
       &__button__addbtn__text
-        &-desktop
-          display none
-        &-responsive
-          display inline
+        margin-inline-end standardSpacing
         &::after
           display none // hide the dropdown triangle
+
+@media (max-width: max-md)
+  .folder__header
+    &__lastModification
+      display none
