@@ -10,19 +10,26 @@ import { translate } from 'react-i18next'
 export const SpaceDescription = (props) => {
   const [showEditionMode, setShowEditionMode] = useState(false)
 
+  const initWysiwyg = () => globalThis.wysiwyg(
+    `#${props.textareaId}`,
+    props.lang,
+    props.onChangeDescription,
+    props.onTinyMceInput,
+    props.onTinyMceKeyDown,
+    props.onTinyMceKeyUp,
+    props.onTinyMceSelectionChange
+  )
+
+  useEffect(() => {
+    if (showEditionMode) initWysiwyg()
+  }, [showEditionMode])
+
   useEffect(() => {
     if (showEditionMode) {
-      globalThis.wysiwyg(
-        `#${props.textareaId}`,
-        props.lang,
-        props.onChangeDescription,
-        props.onTinyMceInput,
-        props.onTinyMceKeyDown,
-        props.onTinyMceKeyUp,
-        props.onTinyMceSelectionChange
-      )
+      tinymceRemove(`#${props.textareaId}`)
+      initWysiwyg()
     }
-  }, [props.lang, showEditionMode])
+  }, [props.lang])
 
   useEffect(() => {
     return () => {
@@ -103,13 +110,37 @@ export const SpaceDescription = (props) => {
 export default translate()(SpaceDescription)
 
 SpaceDescription.propTypes = {
+  apiUrl: PropTypes.string,
+  autoCompleteCursorPosition: PropTypes.number,
+  autoCompleteItemList: PropTypes.array,
   description: PropTypes.string,
+  isAutoCompleteActivated: PropTypes.bool,
+  isReadOnlyMode: PropTypes.bool,
   lang: PropTypes.string,
-  isReadOnlyMode: PropTypes.bool
+  onChangeDescription: PropTypes.func,
+  onClickAutoCompleteItem: PropTypes.func,
+  onClickValidateNewDescription: PropTypes.func,
+  onTinyMceInput: PropTypes.func,
+  onTinyMceKeyDown: PropTypes.func,
+  onTinyMceKeyUp: PropTypes.func,
+  onTinyMceSelectionChange: PropTypes.func,
+  textareaId: PropTypes.string
 }
 
 SpaceDescription.defaultProps = {
+  apiUrl: '/',
+  autoCompleteCursorPosition: 0,
+  autoCompleteItemList: [],
   description: '',
-  lang: '',
-  isReadOnlyMode: true
+  isAutoCompleteActivated: false,
+  isReadOnlyMode: true,
+  lang: 'en',
+  onChangeDescription: () => { },
+  onClickAutoCompleteItem: () => { },
+  onClickValidateNewDescription: () => { },
+  onTinyMceInput: () => { },
+  onTinyMceKeyDown: () => { },
+  onTinyMceKeyUp: () => { },
+  onTinyMceSelectionChange: () => { },
+  textareaId: 'spaceAdvancedTextAreaId'
 }

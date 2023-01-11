@@ -476,15 +476,6 @@ export class Dashboard extends React.Component {
                 />
 
                 <div className='dashboard__workspace__rightMenu__contents'>
-                  <IconButton
-                    customClass='dashboard__workspace__rightMenu__contents__button'
-                    icon='fas fa-fw fa-cog'
-                    text={(userRoleIdInWorkspace >= ROLE.contentManager.id
-                      ? props.t('Space settings')
-                      : props.t('Space information')
-                    )}
-                    onClick={this.handleClickOpenAdvancedDashboard}
-                  />
                   {userRoleIdInWorkspace >= ROLE.contributor.id && (
                     <DropdownMenu
                       buttonCustomClass='dashboard__workspace__rightMenu__contents__button'
@@ -536,6 +527,16 @@ export class Dashboard extends React.Component {
                       onClickBtn={() => props.history.push(PAGE.WORKSPACE.GALLERY(props.currentWorkspace.id))}
                     />
                   )}
+
+                  <IconButton
+                    customClass='dashboard__workspace__rightMenu__contents__button'
+                    icon='fas fa-fw fa-cog'
+                    text={(userRoleIdInWorkspace >= ROLE.contentManager.id
+                      ? props.t('Space settings')
+                      : props.t('Space information')
+                    )}
+                    onClick={this.handleClickOpenAdvancedDashboard}
+                  />
                 </div>
 
                 <MemberList

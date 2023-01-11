@@ -11,7 +11,7 @@ import {
   tinymceRemove
 } from 'tracim_frontend_lib'
 import { translate } from 'react-i18next'
-import SpaceDescription from './SpaceDescription'
+import SpaceDescription from './SpaceDescription.jsx'
 
 export class WorkspaceAdvancedConfiguration extends React.Component {
   componentDidMount () {
@@ -59,8 +59,8 @@ export class WorkspaceAdvancedConfiguration extends React.Component {
           isReadOnlyMode={props.isReadOnlyMode}
           lang={props.lang}
           onChangeDescription={props.onChangeDescription}
-          onClickValidateNewDescription={props.onClickValidateNewDescription}
           onClickAutoCompleteItem={props.onClickAutoCompleteItem}
+          onClickValidateNewDescription={props.onClickValidateNewDescription}
           onTinyMceInput={props.onTinyMceInput}
           onTinyMceKeyDown={props.onTinyMceKeyDown}
           onTinyMceKeyUp={props.onTinyMceKeyUp}
