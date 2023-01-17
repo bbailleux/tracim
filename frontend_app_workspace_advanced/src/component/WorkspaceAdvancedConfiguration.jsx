@@ -149,6 +149,7 @@ export default translate()(Radium(WorkspaceAdvancedConfiguration))
 
 WorkspaceAdvancedConfiguration.propTypes = {
   agendaUrl: PropTypes.string,
+  customColor: PropTypes.string,
   description: PropTypes.string,
   lang: PropTypes.string,
   isReadOnlyMode: PropTypes.bool,
@@ -158,6 +159,7 @@ WorkspaceAdvancedConfiguration.propTypes = {
 
 WorkspaceAdvancedConfiguration.defaultProps = {
   agendaUrl: '',
+  customColor: '',
   description: '',
   lang: '',
   isReadOnlyMode: true,
