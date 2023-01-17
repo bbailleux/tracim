@@ -32,7 +32,7 @@ import {
 import { getWorkspaceSubscriptions, postUserWorkspace, putUserWorkspaceSubscription } from '../action-creator.async.js'
 
 export class JoinWorkspace extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
