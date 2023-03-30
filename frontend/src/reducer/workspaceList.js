@@ -22,33 +22,33 @@ export const serializeWorkspaceListProps = {
   workspace_id: 'id',
   is_deleted: 'isDeleted',
   label: 'label',
-  memberList: 'memberList',
   parent_id: 'parentId',
   publication_enabled: 'publicationEnabled',
   sidebar_entries: 'sidebarEntryList',
   slug: 'slug',
-  public_upload_enabled: 'uploadEnabled'
+  public_upload_enabled: 'uploadEnabled',
+  memberList: 'memberList'
+}
+
+const serializeWorkspace = workspace => {
+  return {
+    ...serialize(workspace, serializeWorkspaceListProps),
+    sidebarEntryList: workspace.sidebar_entries.map(sbe => serialize(sbe, serializeSidebarEntryProps)),
+    memberList: workspace.members.map(serializeMember)
+  }
 }
 
 export function workspaceList (state = [], action, lang) {
   switch (action.type) {
     case `${SET}/${WORKSPACE_LIST}`:
-      return action.workspaceList.map(ws => ({
-        ...serialize(ws, serializeWorkspaceListProps),
-        sidebarEntryList: ws.sidebar_entries.map(sbe => serialize(sbe, serializeSidebarEntryProps)),
-        memberList: []
-      }))
+      return action.workspaceList.map(serializeWorkspace)
 
     case `${ADD}/${WORKSPACE_LIST}`: {
       const spaceList = [
         ...state,
         ...action.workspaceList
           .filter(w => !state.some(s => s.id === w.workspace_id))
-          .map(ws => ({
-            ...serialize(ws, serializeWorkspaceListProps),
-            sidebarEntryList: ws.sidebar_entries.map(sbe => serialize(sbe, serializeSidebarEntryProps)),
-            memberList: []
-          }))
+          .map(serializeWorkspace)
       ]
       return sortListByMultipleCriteria(spaceList, [SORT_BY.LABEL, SORT_BY.ID], SORT_ORDER.ASCENDING, lang)
     }
@@ -114,11 +114,7 @@ export function workspaceList (state = [], action, lang) {
       if (!state.some(ws => ws.id === action.workspaceDetail.workspace_id)) return state
       const spaceList = state.map(
         ws => ws.id === action.workspaceDetail.workspace_id
-          ? {
-            ...ws,
-            ...serialize(action.workspaceDetail, serializeWorkspaceListProps),
-            sidebarEntryList: action.workspaceDetail.sidebar_entries.map(sbe => serialize(sbe, serializeSidebarEntryProps))
-          }
+          ? serializeWorkspace(action.workspaceDetail)
           : ws
       )
       return sortListByMultipleCriteria(spaceList, [SORT_BY.LABEL, SORT_BY.ID], SORT_ORDER.ASCENDING, lang)
