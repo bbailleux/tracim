@@ -1515,9 +1515,6 @@ class WorkspaceMemberSchema(WorkspaceMemberDigestSchema):
 
 
 class WorkspaceWithUserMemberSchema(WorkspaceSchema):
-    """Workspace as returned by the user's workspace API.
-    Includes the list of members within it.
-    """
     members = marshmallow.fields.Nested(WorkspaceMemberSchema(many=True))
 
 
