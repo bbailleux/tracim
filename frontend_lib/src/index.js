@@ -142,7 +142,6 @@ import ScrollToBottomWrapper from './component/ScrollToBottomWrapper/ScrollToBot
 import BtnSwitch from './component/Input/BtnSwitch/BtnSwitch.jsx'
 import Checkbox from './component/Input/Checkbox.jsx'
 import SingleChoiceList from './component/Input/SingleChoiceList/SingleChoiceList.jsx'
-import AutoComplete from './component/Input/AutoComplete/AutoComplete.jsx'
 
 import PageWrapper from './component/Layout/PageWrapper.jsx'
 import PageTitle from './component/Layout/PageTitle.jsx'
@@ -202,14 +201,6 @@ import NewToDo from './component/ToDo/NewToDo.jsx'
 import ToDoItem from './component/ToDo/ToDoItem.jsx'
 
 import ContentType from './component/ContentType/ContentType.jsx'
-
-import {
-  tinymceAutoCompleteHandleInput,
-  tinymceAutoCompleteHandleKeyDown,
-  tinymceAutoCompleteHandleKeyUp,
-  tinymceAutoCompleteHandleClickItem,
-  tinymceAutoCompleteHandleSelectionChange
-} from './tinymceAutoCompleteHelper.js'
 
 import {
   baseFetch,
@@ -358,7 +349,6 @@ export {
   AddFileToUploadButton,
   AgendaInfo,
   ArchiveDeleteContent,
-  AutoComplete,
   Avatar,
   Badge,
   Breadcrumbs,
@@ -518,11 +508,6 @@ export {
   sortTimelineByDate,
   splitFilenameExtension,
   stringIncludes,
-  tinymceAutoCompleteHandleClickItem,
-  tinymceAutoCompleteHandleInput,
-  tinymceAutoCompleteHandleKeyDown,
-  tinymceAutoCompleteHandleKeyUp,
-  tinymceAutoCompleteHandleSelectionChange,
   updateTLMUser,
   uploadFile
 }

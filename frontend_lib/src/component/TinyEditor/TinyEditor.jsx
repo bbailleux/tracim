@@ -57,6 +57,22 @@ const base64EncodeAndTinyMceInsert = (editorRef, files) => {
   }
 }
 
+/**
+ * Translate Tracim language code to TinyMCE language code
+ * @param {String} lang
+ * @returns {String} TinyMCE language code
+ */
+const getTinyMceLang = (lang) => {
+  switch (lang) {
+    case 'fr':
+      return 'fr_FR'
+    case 'pt':
+      return 'pt_PT'
+    default:
+      return lang
+  }
+}
+
 export const TinyEditor = props => {
   const editorRef = useRef(null)
   const inputRef = useRef(null)
@@ -72,19 +88,20 @@ export const TinyEditor = props => {
     defaultRoleList = props.roleList.map(role => ({
       type: 'cardmenuitem',
       direction: 'horizontal',
-      value: `@${role.slug} `,
-      label: `@${role.slug}`,
+      value: `@${props.t(role.slug)} `,
+      label: `@${props.t(role.slug)}`,
       items: [
         {
           type: 'cardtext',
-          text: role.description,
-          name: 'roleDescription'
+          text: props.t(role.description),
+          name: 'roleDescription',
+          classes: ['tinymce-role-description']
         },
         {
           type: 'cardtext',
-          text: `@${role.slug}`,
+          text: `@${props.t(role.slug)}`,
           name: 'roleName',
-          classes: ['tinymce-username']
+          classes: ['tinymce-role-name']
         }
       ]
     }))
@@ -101,11 +118,13 @@ export const TinyEditor = props => {
       />
       <Editor
         key={editorKey}
+        tinymceScriptSrc='/assets/tinymce-5.10.3/js/tinymce/tinymce.min.js'
         onInit={(evt, editor) => {
           editorRef.current = editor
         }}
         init={{
           selector: 'textarea',
+          language: getTinyMceLang(props.language),
           height: props.height,
           max_height: props.maxHeight,
           min_height: props.minHeight,
@@ -115,11 +134,8 @@ export const TinyEditor = props => {
           resize: false,
           statusbar: props.isStatusBarEnabled,
           toolbar: toolbar,
+          default_link_target: '_blank',
           plugins: [
-            // /////////////////////////////////////////////
-            // TinyMCE recommends to use custom plugins in "external plugins" section
-            // 'autocompletion',
-            // /////////////////////////////////////////////
             'advlist autolink lists link image charmap print preview anchor',
             'searchreplace visualblocks code codesample fullscreen emoticons',
             'insertdatetime media table paste code help wordcount',
@@ -249,25 +265,25 @@ export const TinyEditor = props => {
                     type: 'cardmenuitem',
                     value: `@${user.username} `,
                     label: `@${user.username}`,
-                    direction: 'horizontal',
                     items: [
                       {
-                        type: 'cardimage',
-                        src: `${getAvatarBaseUrl(props.apiUrl, user.id)}/raw/avatar`,
-                        alt: user.publicName,
-                        name: 'avatar',
-                        classes: ['tinymce-avatar']
-                      },
-                      {
                         type: 'cardcontainer',
-                        direction: 'horizontal',
                         align: 'left',
+                        direction: 'horizontal',
                         valign: 'middle',
                         items: [
                           {
+                            type: 'cardimage',
+                            src: `${getAvatarBaseUrl(props.apiUrl, user.id)}/raw/avatar`,
+                            alt: user.publicName,
+                            name: 'avatar',
+                            classes: ['tinymce-avatar']
+                          },
+                          {
                             type: 'cardtext',
-                            text: ` ${user.publicName}`,
-                            name: 'publicName'
+                            text: user.publicName,
+                            name: 'publicName',
+                            classes: ['tinymce-public-name']
                           },
                           {
                             type: 'cardtext',
@@ -316,30 +332,21 @@ export const TinyEditor = props => {
                         items: [
                           {
                             type: 'cardcontainer',
+                            align: 'left',
                             direction: 'vertical',
+                            valign: 'middle',
                             items: [
                               {
-                                type: 'cardcontainer',
-                                direction: 'horizontal',
-                                items: [
-                                  {
-                                    type: 'cardtext',
-                                    text: content.label,
-                                    name: 'content_label'
-                                  }
-                                ]
+                                type: 'cardtext',
+                                text: content.label,
+                                name: 'content_label',
+                                classes: ['tinymce-content-label']
                               },
                               {
-                                type: 'cardcontainer',
-                                direction: 'horizontal',
-                                items: [
-                                  {
-                                    type: 'cardtext',
-                                    text: `#${content.content_id.toString()}`,
-                                    name: 'content_id',
-                                    classes: ['tinymce-username']
-                                  }
-                                ]
+                                type: 'cardtext',
+                                text: `#${content.content_id.toString()}`,
+                                name: 'content_id',
+                                classes: ['tinymce-content-id']
                               }
                             ]
                           }
@@ -400,6 +407,7 @@ TinyEditor.propTypes = {
   isContentLinkEnabled: PropTypes.bool,
   isMentionEnabled: PropTypes.bool,
   isStatusBarEnabled: PropTypes.bool,
+  language: PropTypes.string,
   maxHeight: PropTypes.number,
   minHeight: PropTypes.number,
   placeholder: PropTypes.string,
@@ -417,6 +425,7 @@ TinyEditor.defaultProps = {
   isContentLinkEnabled: true,
   isMentionEnabled: true,
   isStatusBarEnabled: false,
+  language: 'en',
   maxHeight: undefined,
   minHeight: 100,
   placeholder: '',

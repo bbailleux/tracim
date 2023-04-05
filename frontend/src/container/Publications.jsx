@@ -413,8 +413,7 @@ export class Publications extends React.Component {
 
     await props.appContentSaveNewCommentText(
       fetchPostPublication.json,
-      publication,
-      ''
+      publication
     )
     await props.appContentSaveNewCommentFileList(
       this.setState.bind(this),
@@ -485,9 +484,10 @@ export class Publications extends React.Component {
               customClass='publishArea'
               icon='fa-fw far fa-paper-plane'
               invalidMentionList={state.invalidMentionList}
+              language={props.user.lang}
               memberList={props.currentWorkspace.memberList}
               multipleFiles
-              placeHolder={props.t('Share a news...')}
+              placeholder={props.t('Share a news...')}
               roleList={DEFAULT_ROLE_LIST}
               submitLabel={props.t('Publish')}
             />

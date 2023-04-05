@@ -497,8 +497,7 @@ export class Kanban extends React.Component {
     const { props, state } = this
     await props.appContentSaveNewCommentText(
       state.content,
-      comment,
-      state.config.slug
+      comment
     )
     await props.appContentSaveNewCommentFileList(
       this.setState.bind(this),
@@ -679,10 +678,12 @@ export class Kanban extends React.Component {
           <KanbanComponent
             config={state.config}
             content={state.content}
+            // End of required props ///////////////////////////////////////////
             editionAuthor={state.editionAuthor}
             fullscreen={state.fullscreen}
             isNewContentRevision={!!state.currentContentRevisionId}
             isRefreshNeeded={state.showRefreshWarning}
+            language={state.loggedUser.lang}
             mode={state.mode}
             onClickFullscreen={this.handleClickFullscreen}
             onClickLastVersion={this.handleClickLastVersion}
